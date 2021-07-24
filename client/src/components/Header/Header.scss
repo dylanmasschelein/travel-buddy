@@ -1,0 +1,24 @@
+.header {
+  background: lightblue;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  &__name {
+    padding: 1rem 0;
+  }
+
+  &__nav {
+    background: purple;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem 0;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+}
