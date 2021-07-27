@@ -1,5 +1,5 @@
 import "./HomePage.scss";
-import HomeMap from "../../HomeMap";
+import HomeMap from "../../components/HomeMap";
 
 const HomePage: React.FC = () => {
   return (
