@@ -1,7 +1,12 @@
 import "./HomePage.scss";
+import HomeMap from "../../HomeMap";
 
-const HomePage = () => {
-  return <div>Home</div>;
+const HomePage: React.FC = () => {
+  return (
+    <div>
+      <HomeMap />
+    </div>
+  );
 };
 
 export default HomePage;

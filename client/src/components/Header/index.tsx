@@ -1,7 +1,7 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
     <div className='header'>
       <h1 className='header__name'>Travel-Buddy</h1>

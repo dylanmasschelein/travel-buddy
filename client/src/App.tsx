@@ -1,19 +1,19 @@
 import "./App.scss";
 import Header from "./components/Header";
-import BlogPage from "./components/pages/BlogPage";
+import ProfilePage from "./components/pages/ProfilePage";
 import HomePage from "./components/pages/HomePage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <Header />
       <Switch>
         <Route path='/' exact component={HomePage} />
-        <Route path='/profile' component={BlogPage} />
+        <Route path='/profile' component={ProfilePage} />
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

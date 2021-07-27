@@ -1,5 +1,5 @@
 .header {
-  background: lightblue;
+  background: orangered;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -9,16 +9,16 @@
   }
 
   &__nav {
-    background: purple;
+    background: yellow;
     display: flex;
     justify-content: space-evenly;
-    padding: 1rem 0;
+    padding: 0.25rem 0;
   }
 
   &__link {
     text-decoration: none;
     color: black;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 }

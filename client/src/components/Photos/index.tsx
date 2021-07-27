@@ -1,6 +1,6 @@
 import "./Photos.scss";
 
-const Photos = () => {
+const Photos: React.FC = () => {
   return (
     <div>
       <h1 className='photos'>Photos</h1>
