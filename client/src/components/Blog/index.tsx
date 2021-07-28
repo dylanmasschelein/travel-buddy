@@ -1,43 +1,35 @@
 import { useState } from "react";
 import "./Blog.scss";
-import BlogPosts from "../BlogPosts";
+import BlogList from "../BlogList";
 import Comments from "../Comments";
-import Form from "../Form";
-import axios from "axios";
+import BlogForm from "../BlogForm";
 
 interface Blog {
   id: number;
   title: string;
   post: string;
+  likes: number;
 }
 
 const Blog: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [toggle, setToggle] = useState<boolean>(false);
 
-  const blogPostHandler = (title: string, post: string) => {
+  const blogPostHandler = (title: string, post: string, likes: number = 0) => {
+    // Probably wanna post this to db then call a get to set the blog list
     setBlogs((prevBlogs) => [
       ...prevBlogs,
-      { id: Math.random(), title: title, post: post },
+      { id: Math.random(), title, post, likes },
     ]);
-  };
-  console.log(blogs);
-
-  // Can this be put in PostComments instead but still Rerender Comment List
-  const commentHandler = async (comment: string) => {
-    try {
-      await axios.get(`http://localhost:8080/blog/${comment}`);
-      console.log("Successfully posted comment!");
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   return (
     <div>
       <h1 className='blog'>Blog</h1>
-      <Form blogPostHandler={blogPostHandler} />
-      <BlogPosts blogs={blogs} />
-      <Comments commentHandler={commentHandler} />
+      <span onClick={() => setToggle(!toggle)}>Add Blogpost</span>
+      {toggle && <BlogForm blogPostHandler={blogPostHandler} />}
+      <BlogList blogs={blogs} />
+      <Comments />
     </div>
   );
 };

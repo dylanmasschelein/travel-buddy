@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import "./Form.scss";
+import "./BlogForm.scss";
 
 interface PostProps {
   blogPostHandler: (title: string, post: string) => void;
 }
 
-const Form: React.FC<PostProps> = ({ blogPostHandler }) => {
+const BlogForm: React.FC<PostProps> = ({ blogPostHandler }) => {
   const [title, setTitle] = useState<string>("");
   const [post, setPost] = useState<string>("");
 
@@ -44,4 +44,4 @@ const Form: React.FC<PostProps> = ({ blogPostHandler }) => {
   );
 };
 
-export default Form;
+export default BlogForm;
