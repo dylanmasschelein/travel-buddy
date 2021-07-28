@@ -9,7 +9,7 @@ interface LikeProps {
 interface Comment {
   id: string;
   user: string;
-  timestamp: Date;
+  published: Date;
   comment: string;
   likes: number;
 }
@@ -36,7 +36,7 @@ const CommentList: React.FC<LikeProps> = ({ likeHandler }) => {
       {comments.map((comment) => {
         <div key={comment.id}>
           <span>{comment.user}</span>
-          <span>{comment.timestamp}</span>
+          <span>{comment.published}</span>
           <p>{comment.comment}</p>
           <button onClick={() => likeHandler(comment.id)}>
             Icon<span>{comment.likes}</span>

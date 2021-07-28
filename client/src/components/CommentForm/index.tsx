@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, FC, FormEvent } from "react";
 import "./CommentForm.scss";
 
 interface CommentProps {
   commentHandler: (comment: string) => void;
 }
 
-const CommentForm: React.FC<CommentProps> = ({ commentHandler }) => {
+const CommentForm: FC<CommentProps> = ({ commentHandler }) => {
   const [comment, setComment] = useState<string>("");
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     commentHandler(comment);
   };

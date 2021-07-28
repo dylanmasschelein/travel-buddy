@@ -8,7 +8,7 @@ const ActiveBlogPost: React.FC<ActivePost> = ({ activePost }) => {
   return (
     <div className='active-post'>
       {/* <h1 className='active-post__title'>{activePost.title}</h1>
-      <span className='active-post__publish'>{activePost.timestamp}</span>
+      <span className='active-post__publish'>{activePost.published}</span>
       <h3 className='active-post__author'>{activePost.author}</h3>
       <p className='active-post__article'>{activePost.article}</p>
       <button>

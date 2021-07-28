@@ -34,27 +34,67 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-// Create Table
-app.get("/createuser", (req, res) => {
-  let sql =
-    "CREATE TABLE users(id int AUTO_INCREMENT, name VARCHAR(255), desgination VARCHAR(255), PRIMARY KEY(id))";
-  db.query(sql, (err) => {
-    if (err) {
-      throw err;
-    }
-    res.send("User table created!");
-  });
-});
-
 // Insert User
-app.get("/employee1", (req, res) => {
-  let post = { name: "Dylan Masschelein", occupation: "CEO" };
+app.post("/user", (req, res) => {
+  const { name, email, password } = req.body;
+  let post = { name, email, password };
   let sql = "INSERT INTO users SET ?";
   let query = db.query(sql, post, (err) => {
     if (err) {
       throw err;
     }
-    res.send("Employee Added");
+    res.send("user Added");
+  });
+});
+
+// Get user
+app.get("/user/login", (req, res) => {
+  const { email, password } = req.body;
+  // Middleware for confirming hashed password
+  let sql = `SELECT FROM users WHERE email=${email} `;
+  let query = db.query(sql, (err) => {
+    if (err) {
+      throw err;
+    }
+    res.send("user found");
+  });
+});
+
+// Insert Blog post
+app.post("/blog", (req, res) => {
+  const { title, published, user, article, likes } = req.body;
+  let post = { title, published, user, article, likes };
+  let sql = "INSERT INTO users SET ?";
+  let query = db.query(sql, post, (err) => {
+    if (err) {
+      throw err;
+    }
+    res.send("blog Added");
+  });
+});
+
+// Insert Blog post
+app.post("/blog/comment", (req, res) => {
+  const { id, user, published, comment, likes } = req.body;
+  let post = { id, published, user, comment, likes };
+  let sql = "INSERT INTO users SET ?";
+  let query = db.query(sql, post, (err) => {
+    if (err) {
+      throw err;
+    }
+    res.send("comment Added");
+  });
+});
+
+// Create Table
+app.get("/createuser", (_req, res) => {
+  let sql =
+    "CREATE TABLE users(id int AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), password VARCHAR(255), created_at TIMESTAMP, PRIMARY KEY(id))";
+  db.query(sql, (err) => {
+    if (err) {
+      throw err;
+    }
+    res.send("User table created!");
   });
 });
 
