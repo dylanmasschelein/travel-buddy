@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const mysql = require("mysql");
+const knex = require("knex")(require("./utils/knexfile.ts"));
+const userRoutes = require("./routes/userRoutes.ts");
 
 require("dotenv").config();
 const cors = require("cors");
@@ -8,18 +10,19 @@ const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-const knex = require("knex")(require("./utils/knexfile.ts"));
+// app.get("/users", (req, res) => {
+//   knex
+//     .select("*")
+//     .from("users")
+//     .then((data) => {
+//       res.json(data);
+//     })
+//     .catch((err) => console.log(err));
+// });
 
-app.get("/users", (req, res) => {
-  knex
-    .select("*")
-    .from("users")
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => console.log(err));
-});
+app.use("/users", userRoutes);
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 

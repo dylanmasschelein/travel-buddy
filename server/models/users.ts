@@ -1,4 +1,4 @@
-const bookshelf = require("../utils/database.ts");
+const bookshelf = require("../utils/bookshelf.ts");
 
 const User = bookshelf.model("User", {
   tableName: "users",
