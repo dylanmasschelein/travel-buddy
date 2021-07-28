@@ -1,10 +1,15 @@
+import { FC } from "react";
 import "./ProfilePage.scss";
 import Blog from "../../components/Blog";
 
-const ProfilePage: React.FC = () => {
+interface UserProps {
+  user: { name: string; email: string; id?: number };
+}
+
+const ProfilePage: FC<UserProps> = ({ user }) => {
   return (
     <div>
-      <Blog />
+      <Blog user={user} />
     </div>
   );
 };

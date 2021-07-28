@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const knex = require("knex")(require("./utils/knexfile.ts"));
-const userRoutes = require("./routes/userRoutes.ts");
+const userRoutes = require("./routes/user.ts");
+const blogRoutes = require("./routes/blog.ts");
 
 require("dotenv").config();
 const cors = require("cors");
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 // });
 
 app.use("/users", userRoutes);
+app.use("/blogs", blogRoutes);
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 

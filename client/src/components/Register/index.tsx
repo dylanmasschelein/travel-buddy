@@ -10,7 +10,7 @@ const Register: FC = () => {
     e.preventDefault();
     const data = { name, email, password };
     try {
-      await axios.post("/user", data);
+      await axios.post("/users/", data);
 
       console.log("User Created - Front-end Msg");
     } catch (err) {

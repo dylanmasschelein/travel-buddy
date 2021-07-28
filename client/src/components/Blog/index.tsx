@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import "./Blog.scss";
 import BlogList from "../BlogList";
 import Comments from "../Comments";
 import BlogForm from "../BlogForm";
+interface UserProps {
+  user: { name: string; email: string; id?: number };
+}
 
 interface Blog {
   id: number;
@@ -11,7 +14,7 @@ interface Blog {
   likes: number;
 }
 
-const Blog: React.FC = () => {
+const Blog: FC<UserProps> = ({ user }) => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [toggle, setToggle] = useState<boolean>(false);
 
@@ -28,6 +31,7 @@ const Blog: React.FC = () => {
       <h1 className='blog'>Blog</h1>
       <span onClick={() => setToggle(!toggle)}>Add Blogpost</span>
       {toggle && <BlogForm blogPostHandler={blogPostHandler} />}
+      {/* For creating a new blog post, likely will move in the future to its own page*/}
       <BlogList blogs={blogs} />
       <Comments />
     </div>

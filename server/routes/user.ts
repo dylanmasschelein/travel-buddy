@@ -6,8 +6,9 @@ const Blog = require("../models/blogs.ts");
 
 router
   //Get single user by id
-  .get("/:id", (req, res) => {
-    User.where({ id: req.params.id })
+  .get("/:email", (req, res) => {
+    //send through password in body for verification later
+    User.where({ email: req.params.email })
       .fetch()
       .then((user) => {
         res.status(200).json(user);
@@ -15,7 +16,7 @@ router
       .catch(() => {
         res
           .status(400)
-          .json({ message: `Error getting user ${req.params.id}` });
+          .json({ message: `Error getting user ${req.params.email}` });
       });
   })
   // Get a single uses via their blog post?
@@ -29,7 +30,10 @@ router
       password,
     })
       .save()
-      .then((user) => res.status(200).json(user))
+      .then((user) => {
+        console.log(user);
+        res.status(200).json(user);
+      })
       .catch(() => {
         res.status(400).json({ message: "Error creating user" });
       });
