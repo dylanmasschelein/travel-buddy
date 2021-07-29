@@ -1,0 +1,17 @@
+@use '../../partials/mixins.scss' as *;
+
+.comment {
+  margin: 2rem 0;
+
+  &__label {
+    @include form-label;
+  }
+
+  &__comment {
+    @include form-textarea;
+  }
+
+  &__button {
+    @include form-button;
+  }
+}

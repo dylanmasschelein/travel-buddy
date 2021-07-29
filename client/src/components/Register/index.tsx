@@ -1,5 +1,6 @@
 import axios from "axios";
 import { FC, FormEvent, useState } from "react";
+import "./Register.scss";
 
 const Register: FC = () => {
   const [name, setName] = useState("");
@@ -19,8 +20,9 @@ const Register: FC = () => {
   };
 
   return (
-    <form className='register' onSubmit={handleRegister}>
-      <label htmlFor='name' className='resgister__label'>
+    <form className='register' onSubmit={(e) => handleRegister(e)}>
+      <h1 className='register__header'>Register</h1>
+      <label htmlFor='name' className='register__label'>
         Name
         <input
           type='text'
@@ -30,7 +32,7 @@ const Register: FC = () => {
           onChange={(e) => setName(e.target.value)}
         />
       </label>
-      <label htmlFor='email' className='resgister__label'>
+      <label htmlFor='email' className='register__label'>
         Email
         <input
           type='text'
@@ -40,7 +42,7 @@ const Register: FC = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <label htmlFor='password' className='resgister__label'>
+      <label htmlFor='password' className='register__label'>
         Password
         <input
           type='text'
@@ -50,7 +52,9 @@ const Register: FC = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      <button>REGISTER</button>
+      <button type='submit' className='register__button'>
+        REGISTER
+      </button>
     </form>
   );
 };

@@ -24,7 +24,8 @@ const Login: FC<UserProps> = ({ setUser }) => {
 
   return (
     <form className='login' onSubmit={(e) => loginHandler(e)}>
-      <label htmlFor='email'>
+      <h1 className='login__heading'>Login</h1>
+      <label htmlFor='email' className='login__label'>
         Email
         <input
           type='email'
@@ -34,7 +35,7 @@ const Login: FC<UserProps> = ({ setUser }) => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <label htmlFor='password'>
+      <label htmlFor='password' className='login__label'>
         Password
         <input
           type='password'
@@ -44,7 +45,9 @@ const Login: FC<UserProps> = ({ setUser }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      <button type='submit'>LOGIN</button>
+      <button type='submit' className='login__button'>
+        LOGIN
+      </button>
     </form>
   );
 };

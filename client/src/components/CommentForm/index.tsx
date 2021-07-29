@@ -13,7 +13,7 @@ const CommentForm: FC<CommentProps> = ({ commentHandler }) => {
     commentHandler(comment);
   };
   return (
-    <form className='comment'>
+    <form className='comment' onSubmit={(e) => submitHandler(e)}>
       <label htmlFor='comment' className='comment__label'>
         Comment
         <input
@@ -24,7 +24,9 @@ const CommentForm: FC<CommentProps> = ({ commentHandler }) => {
           onChange={(e) => setComment(e.target.value)}
         />
       </label>
-      <button onClick={(e) => submitHandler(e)}>POST COMMENT</button>
+      <button type='submit' className='comment__button'>
+        POST COMMENT
+      </button>
     </form>
   );
 };

@@ -22,26 +22,26 @@ const BlogForm: React.FC<PostProps> = ({ user, blogPostHandler }) => {
   };
 
   return (
-    <form className='blog__form'>
-      <label htmlFor='title' className='blog__label'>
+    <form className='blog-form' onSubmit={(e) => handleSubmit(e)}>
+      <label htmlFor='title' className='blog-form__label'>
         Title
         <input
           type='text'
-          className='blog__blog-title'
+          className='blog-form__blog-title'
           id='title'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </label>
-      <label htmlFor='post' className='blog__label'>
+      <label htmlFor='post' className='blog-form__label'>
         Blog post
         <textarea
-          className='blog__content'
+          className='blog-form__content'
           id='post'
           onChange={(e) => setPost(e.target.value)}
         ></textarea>
       </label>
-      <button onClick={(e) => handleSubmit(e)} type='submit'>
+      <button type='submit' className='blog-form__button'>
         POST
       </button>
     </form>
