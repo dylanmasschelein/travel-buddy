@@ -15,12 +15,15 @@ router
 
   //Get blog post by id
   .get("/:id", (req, res) => {
-    Blog.where({ id: req.params.id })
-      .fetch({ withRelated: ["users"] })
+    console.log(req.params.id);
+    Blog.where({ user_id: req.params.id })
+      .fetch()
       .then((post) => {
+        console.log(post);
         res.status(200).json({ post });
       })
       .catch(() => {
+        console.log("catching");
         res
           .status(404)
           .json({ message: `Error getting post ${req.params.id}` });
@@ -31,19 +34,12 @@ router
   .post("/", (req, res) => {
     User.where({ id: req.body.user_id })
       .fetch()
-      .then(
-        (user) => {
-          return user; // -> pass user object to next .then() method
-        },
-        () => {
-          res.status(404).json({ message: "Not a valid user id" });
-        }
-      )
       .then((user) => {
-        new Blog({
+        console.log(user);
+        Blog.forge({
+          user_id: req.body.id,
           title: req.body.title,
-          content: req.body.body,
-          user_id: user.id,
+          body: req.body.body,
         })
           .save()
           .then((newPost) => {

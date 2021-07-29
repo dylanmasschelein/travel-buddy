@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState, useEffect, FC } from "react";
 import "./Blog.scss";
 import BlogList from "../BlogList";
 import Comments from "../Comments";
@@ -19,6 +19,8 @@ const Blog: FC<UserProps> = ({ user }) => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [toggle, setToggle] = useState<boolean>(false);
 
+  useEffect(() => {}, [blogs]);
+
   const blogPostHandler = async (
     title: string,
     body: string,
@@ -31,17 +33,32 @@ const Blog: FC<UserProps> = ({ user }) => {
     };
 
     try {
-      await axios.post("/blogs/", data);
+      await axios.post("blogs/", data);
       console.log("Blog post successfully added!");
     } catch (err) {
       console.error(err);
     }
   };
 
+  const getBlogs = async () => {
+    try {
+      const response = await axios.get("blogs/");
+
+      setBlogs(response.data);
+      console.log("Recieved and set blogs!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <div>
-      <h1 className='blog'>Blog</h1>
-      <span onClick={() => setToggle(!toggle)}>Add Blogpost</span>
+    <div className='blog'>
+      <div className='blog__header'>
+        <h1 className='blog__title'>Blog</h1>
+        <span onClick={() => setToggle(!toggle)} className='blog__add'>
+          +
+        </span>
+      </div>
       {toggle && <BlogForm user={user} blogPostHandler={blogPostHandler} />}
       {/* For creating a new blog post, likely will move in the future to its own page*/}
       <BlogList blogs={blogs} />

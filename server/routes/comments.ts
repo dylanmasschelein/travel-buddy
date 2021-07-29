@@ -1,8 +1,8 @@
 const bookshelf = require("../utils/bookshelf.ts");
 
-const Blog = bookshelf.model("Blog", {
-  tablelName: "blogs",
-  users() {
+const Comment = bookshelf.model("Comment", {
+  tablelName: "comments",
+  comments() {
     return this.belongsToMany("User");
   },
 });

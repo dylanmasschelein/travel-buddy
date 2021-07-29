@@ -1,15 +1,16 @@
 .header {
-  background: orangered;
+  background: rgb(0, 0, 61);
   display: flex;
   flex-direction: column;
   text-align: center;
 
   &__name {
+    color: white;
     padding: 1rem 0;
   }
 
   &__nav {
-    background: yellow;
+    background: rgb(0, 131, 175);
     display: flex;
     justify-content: space-evenly;
     padding: 0.25rem 0;
@@ -17,7 +18,7 @@
 
   &__link {
     text-decoration: none;
-    color: black;
+    color: whitesmoke;
     font-weight: bold;
     font-size: 1.25rem;
   }

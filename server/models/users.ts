@@ -1,9 +1,9 @@
 const bookshelf = require("../utils/bookshelf.ts");
 
-const User = bookshelf.model("Users", {
+const User = bookshelf.model("User", {
   tableName: "users",
-  blogs: function () {
-    return this.hasMany("Blogs");
+  blogs() {
+    return this.belongsToMany("Blog");
   },
 });
 

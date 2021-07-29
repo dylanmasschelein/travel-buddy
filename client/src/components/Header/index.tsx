@@ -12,6 +12,12 @@ const Header: React.FC = () => {
         <Link to='/profile' className='header__link'>
           Profile
         </Link>
+        <Link to='/login' className='header__link'>
+          Login
+        </Link>
+        <Link to='/register' className='header__link'>
+          Register
+        </Link>
       </nav>
     </div>
   );
