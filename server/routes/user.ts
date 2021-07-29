@@ -11,6 +11,8 @@ router
     User.where({ email: req.params.email })
       .fetch()
       .then((user) => {
+        delete user.attributes["created_at"];
+        delete user.attributes["password"];
         res.status(200).json(user);
       })
       .catch(() => {
@@ -19,6 +21,7 @@ router
           .json({ message: `Error getting user ${req.params.email}` });
       });
   })
+
   // Get a single uses via their blog post?
 
   // Register a user

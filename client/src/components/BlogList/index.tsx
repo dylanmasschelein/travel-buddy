@@ -3,7 +3,7 @@ import ActiveBlogPost from "../ActiveBlogPost";
 import axios from "axios";
 
 interface BlogProps {
-  blogs: { id: number; title: string; post: string; likes: number }[];
+  blogs: { title: string; body: string; user_id: number }[];
 }
 
 interface ActivePost {
@@ -32,12 +32,10 @@ const BlogList: React.FC<BlogProps> = ({ blogs }) => {
     <div>
       {activePost && <ActiveBlogPost activePost={activePost} />}
       {blogs.map((blog) => (
-        <div onClick={() => getActivePost(blog.id)} key={blog.id}>
+        <div onClick={() => getActivePost(blog.user_id)} key={blog.user_id}>
           <h1>{blog.title}</h1>
-          <p>{blog.post}</p>
-          <button>
-            ICON<span>{blog.likes}</span>
-          </button>
+          <p>{blog.body}</p>
+          <button>{/* ICON<span>{blog.likes}</span> */}</button>
         </div>
       ))}
     </div>

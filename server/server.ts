@@ -13,16 +13,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.get("/users", (req, res) => {
-//   knex
-//     .select("*")
-//     .from("users")
-//     .then((data) => {
-//       res.json(data);
-//     })
-//     .catch((err) => console.log(err));
-// });
-
 app.use("/users", userRoutes);
 app.use("/blogs", blogRoutes);
 

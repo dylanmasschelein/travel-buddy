@@ -42,7 +42,7 @@ router
       .then((user) => {
         new Blog({
           title: req.body.title,
-          body: req.body.content,
+          content: req.body.body,
           user_id: user.id,
         })
           .save()

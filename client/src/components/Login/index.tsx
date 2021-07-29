@@ -13,6 +13,7 @@ const Login: FC<UserProps> = ({ setUser }) => {
 
   const loginHandler = async (e: FormEvent) => {
     e.preventDefault();
+    console.log("clicked");
     try {
       const response = await axios.get(`/users/${email}`);
       setUser(response.data);
@@ -20,8 +21,9 @@ const Login: FC<UserProps> = ({ setUser }) => {
       console.error(err);
     }
   };
+
   return (
-    <form className='login' onSubmit={loginHandler}>
+    <form className='login' onSubmit={(e) => loginHandler(e)}>
       <label htmlFor='email'>
         Email
         <input
@@ -42,6 +44,7 @@ const Login: FC<UserProps> = ({ setUser }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
+      <button type='submit'>LOGIN</button>
     </form>
   );
 };
