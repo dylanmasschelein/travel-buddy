@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/users.ts");
-const Blog = require("../models/blogs.ts");
+const User = require("../models/users.js");
+const Blog = require("../models/blogs.js");
 // use the "delete keywaord to alter whats recieved in get reqs!"
 
 router
@@ -25,21 +25,21 @@ router
   // Get a single uses via their blog post?
 
   // Register a user
-  .post("/", (req, res) => {
+  .post("/", async (req, res) => {
     const { name, email, password } = req.body;
-    new User({
-      name,
-      email,
-      password,
-    })
-      .save()
-      .then((user) => {
-        console.log(user);
-        res.status(200).json(user);
-      })
-      .catch(() => {
-        res.status(400).json({ message: "Error creating user" });
+    try {
+      const user = await new User({
+        name,
+        email,
+        password,
       });
+
+      await user.save();
+      console.log(User);
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(400).json({ message: err });
+    }
   })
 
   //update a user

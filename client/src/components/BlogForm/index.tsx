@@ -27,7 +27,7 @@ const BlogForm: React.FC<PostProps> = ({ user, blogPostHandler }) => {
         Title
         <input
           type='text'
-          className='blog__content'
+          className='blog__blog-title'
           id='title'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -35,12 +35,11 @@ const BlogForm: React.FC<PostProps> = ({ user, blogPostHandler }) => {
       </label>
       <label htmlFor='post' className='blog__label'>
         Blog post
-        <input
-          type='text'
+        <textarea
           className='blog__content'
           id='post'
           onChange={(e) => setPost(e.target.value)}
-        />
+        ></textarea>
       </label>
       <button onClick={(e) => handleSubmit(e)} type='submit'>
         POST

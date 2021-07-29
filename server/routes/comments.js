@@ -1,4 +1,4 @@
-const bookshelf = require("../utils/bookshelf.ts");
+const bookshelf = require("../utils/bookshelf.js");
 
 const Comment = bookshelf.model("Comment", {
   tablelName: "comments",

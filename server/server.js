@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const mysql = require("mysql");
-const knex = require("knex")(require("./utils/knexfile.ts"));
-const userRoutes = require("./routes/user.ts");
-const blogRoutes = require("./routes/blog.ts");
+const knex = require("knex")(require("./utils/knexfile.js"));
+const userRoutes = require("./routes/user.js");
+const blogRoutes = require("./routes/blog.js");
 
 require("dotenv").config();
 const cors = require("cors");
@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+console.log("im in the server!");
 app.use("/users", userRoutes);
 app.use("/blogs", blogRoutes);
 

@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 1rem;
   }
 
   &__title {
@@ -14,5 +15,27 @@
     font-size: 2rem;
     font-weight: bold;
     margin-right: 2rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    background: rgb(0, 0, 61);
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+  }
+
+  &__blog-title {
+  }
+
+  &__content {
+    margin-top: 0.25rem;
   }
 }

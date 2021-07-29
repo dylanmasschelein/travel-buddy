@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/users.ts");
-const Blog = require("../models/blogs.ts");
+const User = require("../models/users.js");
+const Blog = require("../models/blogs.js");
 
 router
   // Get all posts by related user
@@ -31,22 +31,22 @@ router
   })
 
   // Create new post
-  .post("/", (req, res) => {
-    User.where({ id: req.body.user_id })
-      .fetch()
-      .then((user) => {
-        console.log(user);
-        Blog.forge({
-          user_id: req.body.id,
-          title: req.body.title,
-          body: req.body.body,
-        })
-          .save()
-          .then((newPost) => {
-            res.status(201).json(newPost);
-          });
-      })
-      .catch(() => res.status(404).json({ message: "Error creating post" }));
+  .post("/", async (req, res) => {
+    console.log(req.body);
+    console.log("inside");
+    console.log(Blog);
+    const { user_id, title, body } = req.body;
+    try {
+      const post = await new Blog({
+        user_id,
+        title,
+        body,
+      });
+      await post.save();
+      res.status(200).json({ message: "Blog post created!" });
+    } catch (err) {
+      console.error(err);
+    }
   })
 
   // Update post

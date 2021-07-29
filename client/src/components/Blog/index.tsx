@@ -33,8 +33,8 @@ const Blog: FC<UserProps> = ({ user }) => {
     };
 
     try {
-      await axios.post("blogs/", data);
-      console.log("Blog post successfully added!");
+      const response = await axios.post("blogs/", data);
+      console.log("Blog post successfully added!", response);
     } catch (err) {
       console.error(err);
     }
