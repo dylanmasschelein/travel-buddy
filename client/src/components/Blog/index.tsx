@@ -19,7 +19,9 @@ const Blog: FC<UserProps> = ({ user }) => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [toggle, setToggle] = useState<boolean>(false);
 
-  useEffect(() => {}, [blogs]);
+  useEffect(() => {
+    getBlogs();
+  }, []);
 
   const blogPostHandler = async (
     title: string,
@@ -42,7 +44,7 @@ const Blog: FC<UserProps> = ({ user }) => {
 
   const getBlogs = async () => {
     try {
-      const response = await axios.get("/blogs/");
+      const response = await axios.get(`/blogs/${user.id}`);
 
       setBlogs(response.data);
       console.log("Recieved and set blogs!");

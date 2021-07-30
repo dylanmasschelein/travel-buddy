@@ -17,6 +17,7 @@ const BlogForm: React.FC<PostProps> = ({ user, blogPostHandler }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) return;
     blogPostHandler(title, post, user.id);
     console.log(title, post, user.id);
   };

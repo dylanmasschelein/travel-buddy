@@ -30,6 +30,7 @@ const BlogList: React.FC<BlogProps> = ({ blogs }) => {
   // onClick of a blog post, auto scroll to top and and display the active post
   return (
     <div>
+      <h1>Your Blog Posts</h1>
       {activePost && <ActiveBlogPost activePost={activePost} />}
       {blogs.map((blog) => (
         <div onClick={() => getActivePost(blog.user_id)} key={blog.user_id}>

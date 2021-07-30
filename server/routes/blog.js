@@ -6,9 +6,9 @@ const knex = require("knex")(require("../utils/knexfile"));
 
 router
 
-  .get("/:id", (req, res) => {
+  .get("/:userid", (req, res) => {
     knex
-      .where({ user_id: 1 })
+      .where({ user_id: req.params.userid })
       .select("*")
       .from("blogs")
       .then((data) => {
