@@ -2,53 +2,77 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/users.js");
 const Blog = require("../models/blogs.js");
+const knex = require("knex")(require("../utils/knexfile"));
 
 router
-  // Get all posts by related user
-  .get("/", (req, res) => {
-    Blog.fetchAll({ withRelated: ["users"] })
-      .then((posts) => {
-        res.status(200).json(posts);
+
+  .get("/:id", (req, res) => {
+    knex
+      .where({ user_id: 1 })
+      .select("*")
+      .from("blogs")
+      .then((data) => {
+        console.log(data);
+        res.json(data);
       })
-      .catch(() => res.status(400).json({ message: "Error getting posts" }));
+      .catch((err) => res.send("Error getting warehouses data"));
   })
 
-  //Get blog post by id
-  .get("/:id", (req, res) => {
-    console.log(req.params.id);
-    Blog.where({ user_id: req.params.id })
-      .fetch()
-      .then((post) => {
-        console.log(post);
-        res.status(200).json({ post });
+  .get("/", (req, res) => {
+    knex
+      .select("*")
+      .from("blogs")
+      .then((data) => {
+        console.log(data);
+        res.json(data);
       })
-      .catch(() => {
-        console.log("catching");
-        res
-          .status(404)
-          .json({ message: `Error getting post ${req.params.id}` });
-      });
+      .catch((err) => res.send("Error getting warehouses data"));
   })
 
   // Create new post
-  .post("/", async (req, res) => {
-    console.log(req.body);
-    console.log("inside");
-    console.log(Blog);
-    const { user_id, title, body } = req.body;
-    try {
-      const post = await new Blog({
-        user_id,
-        title,
-        body,
-      });
-      await post.save();
-      res.status(200).json({ message: "Blog post created!" });
-    } catch (err) {
-      console.error(err);
-    }
-  })
 
+  .post("/", (req, res) => {
+    const { user_id, title, body } = req.body;
+    console.log(req.body);
+    User.where({ id: user_id })
+      .fetch()
+      .then(
+        (user) => {
+          return user;
+        },
+        () => {
+          res.status(404).json({ message: "Not a valid user id" });
+        }
+      )
+      .then((user) => {
+        new Blog({
+          title,
+          body,
+          user_id: user.id,
+        })
+          .save()
+          .then((newPost) => {
+            res.status(201).json(newPost);
+          });
+      })
+      .catch(() => res.status(404).json({ message: "Error creating post" }));
+  })
+  // .post("/", async (req, res) => {
+  //   const { user_id, title, body } = req.body;
+  //   try {
+  //     const post = await new Blog({
+  //       title,
+  //       body,
+  //       user_id,
+  //     });
+  //     console.log(post);
+  //     await post.save();
+
+  //     res.status(200).json({ message: "Blog post created!" });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // })
   // Update post
   .put("/:id", (req, res) => {
     Blog.where({ id: req.params.id })

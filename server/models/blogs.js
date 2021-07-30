@@ -1,7 +1,7 @@
 const bookshelf = require("../utils/bookshelf.js");
 
 const Blog = bookshelf.model("Blog", {
-  tablelName: "blogs",
+  tableName: "blogs",
   users() {
     return this.hasMany("User");
   },

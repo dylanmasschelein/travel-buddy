@@ -33,7 +33,7 @@ const Blog: FC<UserProps> = ({ user }) => {
     };
 
     try {
-      const response = await axios.post("blogs/", data);
+      const response = await axios.post("/blogs/", data);
       console.log("Blog post successfully added!", response);
     } catch (err) {
       console.error(err);
@@ -42,7 +42,7 @@ const Blog: FC<UserProps> = ({ user }) => {
 
   const getBlogs = async () => {
     try {
-      const response = await axios.get("blogs/");
+      const response = await axios.get("/blogs/");
 
       setBlogs(response.data);
       console.log("Recieved and set blogs!");

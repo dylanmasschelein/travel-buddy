@@ -1,7 +1,5 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
-const knex = require("knex")(require("./utils/knexfile.js"));
 const userRoutes = require("./routes/user.js");
 const blogRoutes = require("./routes/blog.js");
 
@@ -14,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 console.log("im in the server!");
+
 app.use("/users", userRoutes);
 app.use("/blogs", blogRoutes);
 
