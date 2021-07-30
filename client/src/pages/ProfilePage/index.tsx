@@ -1,8 +1,10 @@
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProfilePage.scss";
+import axios from "axios";
 import Blog from "../../components/Blog";
 import AdventureMap from "../../components/AdventureMap";
+import AdventureCard from "../../components/ActiveBlogPost";
 import { useEffect } from "react";
 import { loadMapApi } from "../../utils/google-maps-config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,12 +18,28 @@ const ProfilePage: FC<UserProps> = ({ user }) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [tripCoords, setTripCoords] = useState(null);
   const [profNav, setProfNav] = useState(false);
+  const [adventures, setAdventures] = useState([]);
+  const [viewingAdventure, setViewingAdventure] = useState({});
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
     googleMapScript.addEventListener("load", () => {
       setScriptLoaded(false); // change to true to display map
     });
+  }, []);
+
+  const getAdventureCards = async () => {
+    try {
+      const response = await axios.get("/adventures/");
+
+      setAdventures(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getAdventureCards();
   }, []);
 
   return (
@@ -50,6 +68,9 @@ const ProfilePage: FC<UserProps> = ({ user }) => {
           </Link>
         </nav>
       )}
+      {adventures.map((adventure) => (
+        <AdventureCard adventure={adventure} />
+      ))}
       {scriptLoaded && (
         <AdventureMap
           mapType={google.maps.MapTypeId.ROADMAP}
