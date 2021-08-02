@@ -7,7 +7,8 @@ import Adventure from "../../models/Adventure";
 
 const Adventures = () => {
   const [adventures, setAdventures] = useState<Adventure[]>([]);
-
+  const [activeAdventure, setActiveAdventure] = useState<object>({});
+  console.log(activeAdventure);
   useEffect(() => {
     getAdventureCards();
   }, []);
@@ -17,6 +18,7 @@ const Adventures = () => {
       const response = await axios.get("/adventures/");
 
       setAdventures(response.data);
+      console.log(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -24,7 +26,10 @@ const Adventures = () => {
 
   return (
     <div>
-      <AdventureCardList adventures={adventures} />
+      <AdventureCardList
+        adventures={adventures}
+        setActiveAdventure={setActiveAdventure}
+      />
     </div>
   );
 };
