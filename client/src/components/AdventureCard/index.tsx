@@ -1,16 +1,8 @@
 import { FC } from "react";
 import "./AdventureCard.scss";
+import Adventure from "../../models/Adventure";
 
-interface Adventure {
-  adventure: {
-    title: string;
-    country: string;
-    length_of_stay: number;
-    img: any;
-  };
-}
-
-const AdventureCard: FC<Adventure> | null = ({ adventure }) => {
+const AdventureCard: FC<Adventure> = (adventure) => {
   return (
     <div>
       <h2>{adventure.title}</h2>

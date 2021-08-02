@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const userRoutes = require("./routes/user.js");
 const blogRoutes = require("./routes/blog.js");
+const adventureRoutes = require("./routes/adventures.js");
+const locationRoutes = require("./routes/locations.js");
 
 require("dotenv").config();
 const cors = require("cors");
@@ -13,6 +15,8 @@ app.use(express.urlencoded({ extended: false }));
 
 console.log("im in the server!");
 
+app.use("/adventures", adventureRoutes);
+app.use("/locations", locationRoutes);
 app.use("/users", userRoutes);
 app.use("/blogs", blogRoutes);
 

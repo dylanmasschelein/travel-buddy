@@ -7,4 +7,4 @@ const Comment = bookshelf.model("Comment", {
   },
 });
 
-module.exports = Blog;
+module.exports = Comment;

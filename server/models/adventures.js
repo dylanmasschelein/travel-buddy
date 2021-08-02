@@ -7,4 +7,4 @@ const Adventure = bookshelf.model("Adventure", {
   },
 });
 
-module.exports = Advenutre;
+module.exports = Adventure;
