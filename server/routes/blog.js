@@ -1,21 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/users.js");
-const Blog = require("../models/blogs.js");
+const Blog = require("../models/blogs");
+const Location = require("../models/locations");
 const knex = require("knex")(require("../utils/knexfile"));
 
 router
 
-  .get("/:userid", (req, res) => {
+  .get("/:locationid", (req, res) => {
+    const locationId = Number(req.params.locationid);
     knex
-      .where({ user_id: req.params.userid })
+      .where({ location_id: locationId })
       .select("*")
       .from("blogs")
       .then((data) => {
         console.log(data);
         res.json(data);
       })
-      .catch((err) => res.send("Error getting warehouses data"));
+      .catch((err) => res.send("Error getting blogs for this location"));
   })
 
   .get("/", (req, res) => {
@@ -26,29 +27,28 @@ router
         console.log(data);
         res.json(data);
       })
-      .catch((err) => res.send("Error getting warehouses data"));
+      .catch((err) => res.send("Error getting all blogs"));
   })
 
   // Create new post
-
   .post("/", (req, res) => {
-    const { user_id, title, body } = req.body;
+    const { location_id, title, body } = req.body;
     console.log(req.body);
-    User.where({ id: user_id })
+    Location.where({ id: location_id })
       .fetch()
       .then(
-        (user) => {
-          return user;
+        (location) => {
+          return location;
         },
         () => {
           res.status(404).json({ message: "Not a valid user id" });
         }
       )
-      .then((user) => {
+      .then((location) => {
         new Blog({
           title,
           body,
-          user_id: user.id,
+          location_id: location.id,
         })
           .save()
           .then((newPost) => {
@@ -57,22 +57,7 @@ router
       })
       .catch(() => res.status(404).json({ message: "Error creating post" }));
   })
-  // .post("/", async (req, res) => {
-  //   const { user_id, title, body } = req.body;
-  //   try {
-  //     const post = await new Blog({
-  //       title,
-  //       body,
-  //       user_id,
-  //     });
-  //     console.log(post);
-  //     await post.save();
 
-  //     res.status(200).json({ message: "Blog post created!" });
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // })
   // Update post
   .put("/:id", (req, res) => {
     Blog.where({ id: req.params.id })

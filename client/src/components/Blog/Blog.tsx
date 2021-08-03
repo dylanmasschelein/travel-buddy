@@ -4,9 +4,11 @@ import BlogList from "../BlogList";
 import Comments from "../Comments";
 import BlogForm from "../BlogForm";
 import axios from "axios";
+import { Location } from "../../models/Location";
 
 interface UserProps {
   user: { name: string; email: string; id: number };
+  location: Location[];
 }
 
 interface Blog {
@@ -15,7 +17,7 @@ interface Blog {
   user_id: number;
 }
 
-const Blog: FC<UserProps> = ({ user }) => {
+const Blog: FC<UserProps> = ({ user, location }) => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [toggle, setToggle] = useState<boolean>(false);
 
@@ -26,12 +28,12 @@ const Blog: FC<UserProps> = ({ user }) => {
   const blogPostHandler = async (
     title: string,
     body: string,
-    user_id: number
+    location_id: number
   ) => {
     const data = {
       title,
       body,
-      user_id,
+      location_id,
     };
 
     try {
@@ -44,9 +46,10 @@ const Blog: FC<UserProps> = ({ user }) => {
 
   const getBlogs = async () => {
     try {
-      const response = await axios.get(`/blogs/${user.id}`);
+      const response = await axios.get(`/blogs/${location[0].id}`);
 
       setBlogs(response.data);
+      console.log(response.data);
       console.log("Recieved and set blogs!");
     } catch (err) {
       console.error(err);
@@ -61,10 +64,12 @@ const Blog: FC<UserProps> = ({ user }) => {
           +
         </span>
       </div>
-      {toggle && <BlogForm user={user} blogPostHandler={blogPostHandler} />}
+      {toggle && (
+        <BlogForm location={location} blogPostHandler={blogPostHandler} />
+      )}
       {/* For creating a new blog post, likely will move in the future to its own page*/}
-      <BlogList blogs={blogs} />
-      <Comments />
+      {blogs && <BlogList blogs={blogs} />}
+      {/* <Comments /> */}
     </div>
   );
 };

@@ -1,12 +1,13 @@
 import React from "react";
 import AdventureCardList from "../AdventureCardList";
 import AdventureCard from "../AdventureCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import axios from "axios";
 import Adventure, { ActiveAdv } from "../../models/Adventure";
 import ActiveAdvenutre from "../ActiveAdventure";
+import { UserProps } from "../../models/User";
 
-const Adventures = () => {
+const Adventures: FC<UserProps> = ({ user }) => {
   const [adventures, setAdventures] = useState<Adventure[]>([]);
   const [activeAdventure, setActiveAdventure] = useState<ActiveAdv | null>(
     null
@@ -30,7 +31,7 @@ const Adventures = () => {
   return (
     <div>
       {activeAdventure ? (
-        <ActiveAdvenutre activeAdventure={activeAdventure} />
+        <ActiveAdvenutre user={user} activeAdventure={activeAdventure} />
       ) : (
         <AdventureCardList
           adventures={adventures}

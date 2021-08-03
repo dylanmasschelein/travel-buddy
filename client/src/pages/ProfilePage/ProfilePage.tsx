@@ -5,10 +5,7 @@ import Adventures from "../../components/Adventures";
 import AdventureMap from "../../components/AdventureMap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-
-interface UserProps {
-  user: { name: string; email: string; id: number };
-}
+import { UserProps } from "../../models/User";
 
 const ProfilePage: FC<UserProps> = ({ user }) => {
   const [tripCoords, setTripCoords] = useState(null);
@@ -42,7 +39,7 @@ const ProfilePage: FC<UserProps> = ({ user }) => {
         </nav>
       )}
 
-      <Adventures />
+      <Adventures user={user} />
     </div>
   );
 };

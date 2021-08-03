@@ -1,25 +1,22 @@
 import React from "react";
 import { useState } from "react";
 import "./BlogForm.scss";
+import { Location } from "../../models/Location";
 
 interface PostProps {
   blogPostHandler: (title: string, post: string, user_id: number) => void;
-  user: {
-    email: string;
-    id: number;
-    name: string;
-  };
+  location: Location[];
 }
 
-const BlogForm: React.FC<PostProps> = ({ user, blogPostHandler }) => {
+const BlogForm: React.FC<PostProps> = ({ location, blogPostHandler }) => {
   const [title, setTitle] = useState<string>("");
   const [post, setPost] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
-    blogPostHandler(title, post, user.id);
-    console.log(title, post, user.id);
+    if (!location) return;
+    blogPostHandler(title, post, location[0].id);
+    console.log(title, post, location[0].id);
   };
 
   return (

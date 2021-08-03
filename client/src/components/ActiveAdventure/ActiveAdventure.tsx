@@ -5,9 +5,11 @@ import { ActiveAdv } from "../../models/Adventure";
 import { loadMapApi } from "../../utils/google-maps-config";
 import AdventureMap from "../AdventureMap";
 import LocationCard from "../LocationCard";
+import { UserProps } from "../../models/User";
 
 type ActiveAdventure = {
   activeAdventure: ActiveAdv;
+  user: { name: string; email: string; id: number };
 };
 
 type Coords = {
@@ -29,11 +31,11 @@ interface Location {
   place_id: string;
 }
 
-const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
+const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
   const [coords, setCoords] = useState<Coords[]>([]);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [data, setData] = useState<object | null>(null);
-  const [location, setLocation] = useState<Location>(null);
+  const [location, setLocation] = useState<Location[]>(null);
 
   console.log(location);
 
@@ -99,7 +101,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
           />
         )}
       </div>
-      {location && <LocationCard location={location} />}
+      {location && <LocationCard user={user} location={location} />}
     </div>
   );
 };

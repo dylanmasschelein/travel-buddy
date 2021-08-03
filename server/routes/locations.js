@@ -7,7 +7,6 @@ const Location = require("../models/locations");
 router
   .get("/active/:locationid", (req, res) => {
     const locationId = Number(req.params.locationid);
-    console.log("hiot");
     knex
       .where({ id: locationId })
       .select("*")
@@ -35,7 +34,6 @@ router
 
   .post("/", (req, res) => {
     const {
-      adventure_id,
       coords,
       city,
       province,
