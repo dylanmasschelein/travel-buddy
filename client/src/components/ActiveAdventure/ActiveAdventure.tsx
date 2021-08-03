@@ -9,11 +9,18 @@ type ActiveAdventure = {
   activeAdventure: ActiveAdv;
 };
 
+type Coords = {
+  lat: number;
+  lng: number;
+};
+
 const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
-  const [coords, setCoords] = useState<string[]>([]);
+  const [coords, setCoords] = useState<Coords[]>([]);
   const [locations, setLocations] = useState<object[]>([]);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [data, setData] = useState<object | null>(null);
+
+  console.log(data);
 
   useEffect(() => {
     getLocations(activeAdventure.id);
@@ -24,7 +31,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
       const locations = await axios.get(`/locations/${id}`);
       const coordinates = [];
       locations.data.forEach((location) => {
-        coordinates.push(location.coords);
+        coordinates.push(JSON.parse(location.coords));
       });
       setCoords(coordinates);
       setLocations(locations.data);
@@ -60,6 +67,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
             mapType={google.maps.MapTypeId.ROADMAP}
             mapTypeControl={true}
             setData={setData}
+            coords={coords}
           />
         )}
       </div>

@@ -6,6 +6,7 @@ import axios from "axios";
 interface Map {
   mapType: google.maps.MapTypeId;
   mapTypeControl?: boolean;
+  coords: { lat: number; lng: number }[];
   setData: (d: object) => void;
 }
 
@@ -23,6 +24,7 @@ const AdventureMap: FC<Map> = ({
   setData,
   mapType,
   mapTypeControl = false,
+  coords,
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
@@ -30,15 +32,28 @@ const AdventureMap: FC<Map> = ({
 
   const startMap = () => {
     if (!map) {
-      defaultMapStart();
+      defaultMapStart(); // initial center stored in db later
     }
   };
 
-  useEffect(startMap, [map]);
+  useEffect(() => {
+    startMap();
+    plotInitialMarkers();
+  }, [map, coords]);
 
   const defaultMapStart = () => {
     const defaultCenter = new google.maps.LatLng(12, -75);
     initMap(5, defaultCenter);
+  };
+
+  const plotInitialMarkers = () => {
+    coords.forEach((coord) => {
+      new google.maps.Marker({
+        position: coord,
+        map,
+        title: "Hi! im a marker!",
+      });
+    });
   };
 
   const initEventListener = (): void => {

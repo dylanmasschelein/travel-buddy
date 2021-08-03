@@ -21,7 +21,7 @@ router
   .get("/", (req, res) => {
     knex
       .select("*")
-      .from("location")
+      .from("locations")
       .then((data) => {
         console.log(data);
         res.json(data);
@@ -42,12 +42,10 @@ router
       full_address,
       place_id,
     } = req.body;
-    console.log(req.body);
-    Adventure.where({ id: adventure_id })
+    Adventure.where({ id: 1 })
       .fetch()
       .then(
         (adventure) => {
-          console.log(adventure, "this is the fucking adventure");
           return adventure;
         },
         () => {
@@ -55,7 +53,6 @@ router
         }
       )
       .then((adventure) => {
-        console.log(typeof adventure.id);
         new Location({
           city,
           coords,
@@ -68,7 +65,6 @@ router
         })
           .save()
           .then((newPost) => {
-            console.log(newPost, "this is the new fucking post");
             res.status(201).json(newPost);
           });
       })
