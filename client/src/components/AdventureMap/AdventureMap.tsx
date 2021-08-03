@@ -3,11 +3,17 @@ import { FC, useRef, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
+interface Coords {
+  lat: number;
+  lng: number;
+}
+
 interface Map {
   mapType: google.maps.MapTypeId;
   mapTypeControl?: boolean;
-  coords: { lat: number; lng: number }[];
+  coords: { id: number; coords: Coords }[];
   setData: (d: object) => void;
+  getClickedLocation: (d: number) => void;
 }
 
 interface Marker {
@@ -25,6 +31,7 @@ const AdventureMap: FC<Map> = ({
   mapType,
   mapTypeControl = false,
   coords,
+  getClickedLocation,
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
@@ -46,13 +53,15 @@ const AdventureMap: FC<Map> = ({
     initMap(5, defaultCenter);
   };
 
+  let mapMarker: google.maps.Marker;
   const plotInitialMarkers = () => {
     coords.forEach((coord) => {
-      new google.maps.Marker({
-        position: coord,
+      mapMarker = new google.maps.Marker({
+        position: coord.coords,
         map,
         title: "Hi! im a marker!",
       });
+      mapMarker.addListener("click", () => getClickedLocation(coord.id));
     });
   };
 

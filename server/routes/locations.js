@@ -5,10 +5,11 @@ const knex = require("knex")(require("../utils/knexfile"));
 const Location = require("../models/locations");
 
 router
-  .get("/:adventureid", (req, res) => {
-    const adventureId = Number(req.params.adventureid);
+  .get("/active/:locationid", (req, res) => {
+    const locationId = Number(req.params.locationid);
+    console.log("hiot");
     knex
-      .where({ adventure_id: adventureId })
+      .where({ id: locationId })
       .select("*")
       .from("location")
       .then((data) => {
@@ -17,11 +18,12 @@ router
       })
       .catch((err) => res.send("Error getting location data"));
   })
-
-  .get("/", (req, res) => {
+  .get("/:adventureid", (req, res) => {
+    const adventureId = Number(req.params.adventureid);
     knex
+      .where({ adventure_id: adventureId })
       .select("*")
-      .from("locations")
+      .from("location")
       .then((data) => {
         console.log(data);
         res.json(data);

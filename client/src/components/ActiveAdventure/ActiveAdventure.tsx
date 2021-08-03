@@ -4,37 +4,54 @@ import "./ActiveAdventure.scss";
 import { ActiveAdv } from "../../models/Adventure";
 import { loadMapApi } from "../../utils/google-maps-config";
 import AdventureMap from "../AdventureMap";
+import LocationCard from "../LocationCard";
 
 type ActiveAdventure = {
   activeAdventure: ActiveAdv;
 };
 
 type Coords = {
-  lat: number;
-  lng: number;
+  id: number;
+  coords: {
+    lat: number;
+    lng: number;
+  };
 };
+
+interface Location {
+  abbrv_province: string;
+  adventure_id: number;
+  city: string;
+  coords: string;
+  country: string;
+  full_address: string;
+  id: number;
+  place_id: string;
+}
 
 const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
   const [coords, setCoords] = useState<Coords[]>([]);
-  const [locations, setLocations] = useState<object[]>([]);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [data, setData] = useState<object | null>(null);
+  const [location, setLocation] = useState<Location>(null);
 
-  console.log(data);
+  console.log(location);
 
   useEffect(() => {
     getLocations(activeAdventure.id);
-  }, []);
+  }, [location]);
 
   const getLocations = async (id) => {
     try {
       const locations = await axios.get(`/locations/${id}`);
       const coordinates = [];
       locations.data.forEach((location) => {
-        coordinates.push(JSON.parse(location.coords));
+        coordinates.push({
+          id: location.id,
+          coords: JSON.parse(location.coords),
+        });
       });
       setCoords(coordinates);
-      setLocations(locations.data);
     } catch (err) {
       console.error(err);
     }
@@ -56,6 +73,16 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
     }
   };
 
+  const getClickedLocation = async (id) => {
+    try {
+      const location = await axios.get(`/locations/active/${id}`);
+      setLocation(location.data);
+      console.log("Location Recieved!!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className='active-acventure'>
       <h1 className='active-adventure__header'>{activeAdventure.title}</h1>
@@ -68,9 +95,11 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ activeAdventure }) => {
             mapTypeControl={true}
             setData={setData}
             coords={coords}
+            getClickedLocation={getClickedLocation}
           />
         )}
       </div>
+      {location && <LocationCard location={location} />}
     </div>
   );
 };
