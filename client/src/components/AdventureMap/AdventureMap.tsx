@@ -1,10 +1,12 @@
 import "./AdventureMap.scss";
 import { FC, useRef, useState } from "react";
 import { useEffect } from "react";
+import axios from "axios";
 
 interface Map {
   mapType: google.maps.MapTypeId;
   mapTypeControl?: boolean;
+  setData: (d: object) => void;
 }
 
 interface Marker {
@@ -17,7 +19,11 @@ type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 type GoogleMarker = google.maps.Marker;
 
-const AdventureMap: FC<Map> = ({ mapType, mapTypeControl = false }) => {
+const AdventureMap: FC<Map> = ({
+  setData,
+  mapType,
+  mapTypeControl = false,
+}) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
   const [marker, setMarker] = useState<Marker>();
@@ -49,8 +55,24 @@ const AdventureMap: FC<Map> = ({ mapType, mapTypeControl = false }) => {
     const geocoder = new google.maps.Geocoder();
     await geocoder.geocode(
       { location: coordinate },
-      function (results, status) {
+      async function (results, status) {
         if (status === "OK") {
+          const coordinates = JSON.stringify({
+            lat: coordinate.lat(),
+            lng: coordinate.lng(),
+          });
+
+          const data = {
+            coords: coordinates,
+            city: results[0].address_components[2].long_name,
+            province: results[0].address_components[4].long_name,
+            abbrv_province: results[0].address_components[4].short_name,
+            country: results[0].address_components[5].long_name,
+            full_address: results[0].formatted_address,
+            place_id: results[0].place_id,
+          };
+          setData(data);
+
           setMarker({
             address: results[0].formatted_address,
             latitude: coordinate.lat(),

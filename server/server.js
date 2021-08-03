@@ -15,8 +15,8 @@ app.use(express.urlencoded({ extended: false }));
 
 console.log("im in the server!");
 
-app.use("/adventures", adventureRoutes);
 app.use("/locations", locationRoutes);
+app.use("/adventures", adventureRoutes);
 app.use("/users", userRoutes);
 app.use("/blogs", blogRoutes);
 

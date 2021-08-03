@@ -5,12 +5,12 @@ const knex = require("knex")(require("../utils/knexfile"));
 const Location = require("../models/locations");
 
 router
-
-  .get("/:userid", (req, res) => {
+  .get("/:adventureid", (req, res) => {
+    const adventureId = Number(req.params.adventureid);
     knex
-      .where({ user_id: req.params.userid })
+      .where({ adventure_id: adventureId })
       .select("*")
-      .from("locations")
+      .from("location")
       .then((data) => {
         console.log(data);
         res.json(data);
@@ -21,7 +21,7 @@ router
   .get("/", (req, res) => {
     knex
       .select("*")
-      .from("locations")
+      .from("location")
       .then((data) => {
         console.log(data);
         res.json(data);
@@ -32,27 +32,43 @@ router
   // Create new post
 
   .post("/", (req, res) => {
-    const { adventure_id, coords, city } = req.body;
+    const {
+      adventure_id,
+      coords,
+      city,
+      province,
+      abbrv_province,
+      country,
+      full_address,
+      place_id,
+    } = req.body;
     console.log(req.body);
     Adventure.where({ id: adventure_id })
       .fetch()
       .then(
         (adventure) => {
+          console.log(adventure, "this is the fucking adventure");
           return adventure;
         },
         () => {
-          res.status(404).json({ message: "Not a valid user id" });
+          res.status(404).json({ message: "Not a valid adventure id" });
         }
       )
       .then((adventure) => {
-        console.log(adventure);
+        console.log(typeof adventure.id);
         new Location({
           city,
           coords,
           adventure_id: adventure.id,
+          province,
+          abbrv_province,
+          country,
+          full_address,
+          place_id,
         })
           .save()
           .then((newPost) => {
+            console.log(newPost, "this is the new fucking post");
             res.status(201).json(newPost);
           });
       })

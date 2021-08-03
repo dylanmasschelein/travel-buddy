@@ -3,11 +3,14 @@ import AdventureCardList from "../AdventureCardList";
 import AdventureCard from "../AdventureCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Adventure from "../../models/Adventure";
+import Adventure, { ActiveAdv } from "../../models/Adventure";
+import ActiveAdvenutre from "../ActiveAdventure";
 
 const Adventures = () => {
   const [adventures, setAdventures] = useState<Adventure[]>([]);
-  const [activeAdventure, setActiveAdventure] = useState<object>({});
+  const [activeAdventure, setActiveAdventure] = useState<ActiveAdv | null>(
+    null
+  );
   console.log(activeAdventure);
   useEffect(() => {
     getAdventureCards();
@@ -26,10 +29,14 @@ const Adventures = () => {
 
   return (
     <div>
-      <AdventureCardList
-        adventures={adventures}
-        setActiveAdventure={setActiveAdventure}
-      />
+      {activeAdventure ? (
+        <ActiveAdvenutre activeAdventure={activeAdventure} />
+      ) : (
+        <AdventureCardList
+          adventures={adventures}
+          setActiveAdventure={setActiveAdventure}
+        />
+      )}
     </div>
   );
 };
