@@ -2,15 +2,12 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProfilePage.scss";
 import Adventures from "../../components/Adventures";
-import AdventureMap from "../../components/AdventureMap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { UserProps } from "../../models/User";
 
 const ProfilePage: FC<UserProps> = ({ user }) => {
-  const [tripCoords, setTripCoords] = useState(null);
   const [profNav, setProfNav] = useState(false);
-  const [viewingAdventure, setViewingAdventure] = useState({});
 
   return (
     <div className='profile'>

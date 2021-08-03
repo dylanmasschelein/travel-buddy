@@ -4,7 +4,7 @@ import "./BlogForm.scss";
 import { Location } from "../../models/Location";
 
 interface PostProps {
-  blogPostHandler: (title: string, post: string, user_id: number) => void;
+  blogPostHandler: (title: string, post: string, location_id: number) => void;
   location: Location[];
 }
 

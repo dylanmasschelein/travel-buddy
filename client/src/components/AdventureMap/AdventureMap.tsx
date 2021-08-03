@@ -1,7 +1,6 @@
 import "./AdventureMap.scss";
 import { FC, useRef, useState } from "react";
 import { useEffect } from "react";
-import axios from "axios";
 
 interface Coords {
   lat: number;

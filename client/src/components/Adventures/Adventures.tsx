@@ -1,11 +1,11 @@
 import React from "react";
 import AdventureCardList from "../AdventureCardList";
-import AdventureCard from "../AdventureCard";
 import { useState, useEffect, FC } from "react";
 import axios from "axios";
 import Adventure, { ActiveAdv } from "../../models/Adventure";
 import ActiveAdvenutre from "../ActiveAdventure";
 import { UserProps } from "../../models/User";
+import PhotoUpload from "../PhotoUpload";
 
 const Adventures: FC<UserProps> = ({ user }) => {
   const [adventures, setAdventures] = useState<Adventure[]>([]);
@@ -38,6 +38,7 @@ const Adventures: FC<UserProps> = ({ user }) => {
           setActiveAdventure={setActiveAdventure}
         />
       )}
+      <PhotoUpload />
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import "./Blog.scss";
 import BlogList from "../BlogList";
-import Comments from "../Comments";
 import BlogForm from "../BlogForm";
 import axios from "axios";
 import { Location } from "../../models/Location";
@@ -14,16 +13,28 @@ interface UserProps {
 interface Blog {
   title: string;
   body: string;
-  user_id: number;
+  location_id: number;
+  id: number;
 }
 
-const Blog: FC<UserProps> = ({ user, location }) => {
+const Blogs: FC<UserProps> = ({ location }) => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [toggle, setToggle] = useState<boolean>(false);
 
   useEffect(() => {
+    const getBlogs = async () => {
+      try {
+        const response = await axios.get(`/blogs/${location[0].id}`);
+
+        setBlogs(response.data);
+        console.log(response.data);
+        console.log("Recieved and set blogs!");
+      } catch (err) {
+        console.error(err);
+      }
+    };
     getBlogs();
-  }, []);
+  }, [location]);
 
   const blogPostHandler = async (
     title: string,
@@ -39,18 +50,6 @@ const Blog: FC<UserProps> = ({ user, location }) => {
     try {
       const response = await axios.post("/blogs/", data);
       console.log("Blog post successfully added!", response);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getBlogs = async () => {
-    try {
-      const response = await axios.get(`/blogs/${location[0].id}`);
-
-      setBlogs(response.data);
-      console.log(response.data);
-      console.log("Recieved and set blogs!");
     } catch (err) {
       console.error(err);
     }
@@ -73,4 +72,4 @@ const Blog: FC<UserProps> = ({ user, location }) => {
     </div>
   );
 };
-export default Blog;
+export default Blogs;
