@@ -6,6 +6,7 @@ import { loadMapApi } from "../../utils/google-maps-config";
 import AdventureMap from "../AdventureMap";
 import LocationCard from "../LocationCard";
 import { UserProps } from "../../models/User";
+import PhotoUpload from "../PhotoUpload";
 
 type ActiveAdventure = {
   activeAdventure: ActiveAdv;
@@ -102,6 +103,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
         )}
       </div>
       {location && <LocationCard user={user} location={location} />}
+      <PhotoUpload location={location} />
     </div>
   );
 };

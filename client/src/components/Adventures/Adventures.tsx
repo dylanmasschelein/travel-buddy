@@ -38,7 +38,6 @@ const Adventures: FC<UserProps> = ({ user }) => {
           setActiveAdventure={setActiveAdventure}
         />
       )}
-      <PhotoUpload />
     </div>
   );
 };
