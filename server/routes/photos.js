@@ -5,21 +5,18 @@ const knex = require("knex")(require("../utils/knexfile"));
 const Location = require("../models/locations");
 const multer = require("multer");
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "../uploads/");
-//   },
-//   filename: (req, file, cb) => {
-//     const fileName = file.originalname.toLowerCase().split(" ").join("-");
-//     cb(null, `${file.originalname}`);
-//   },
-// });
+const { uploadFile, getFileStream } = require("../s3");
 
-// const upload = multer({
-//   storage: storage,
-// });
-const upload = multer();
+const upload = multer({ dest: "./uploads/" });
+
 router
+
+  .get("/:key", (res, req) => {
+    const key = req.parmas.key;
+    const readStream = getFileStream(key);
+
+    readStream.pipe(res);
+  })
   .get("/active/:locationid", (req, res) => {
     const locationId = Number(req.params.locationid);
     knex
@@ -47,12 +44,16 @@ router
 
   // Create new post
 
-  .post("/:locationId", upload.single("photo"), (req, res, err) => {
+  .post("/:locationId", upload.single("photo"), async (req, res) => {
     const {
       file,
       body: { title, caption },
     } = req;
     const locationId = Number(req.params.locationId);
+    // Upload tos3 Bucket
+    const result = await uploadFile(file);
+    console.log(result);
+
     Location.where({ id: locationId })
       .fetch()
       .then(
@@ -69,7 +70,7 @@ router
           title,
           caption,
           photo_location_id: location.id,
-          photo: file.originalname,
+          photo: file.filename,
         })
           .save()
           .then((newPhoto) => {

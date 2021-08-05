@@ -16,6 +16,7 @@ const ProfilePage: FC<UserProps> = ({ user }) => {
         onClick={() => setProfNav(!profNav)}
         className='profile__bars'
       />
+      {user && <h3>Logged in</h3>}
       {profNav && (
         <nav className='profile__nav'>
           <Link to='/profile/blog' className='profile__link'>

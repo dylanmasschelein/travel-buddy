@@ -1,0 +1,24 @@
+@use '../../partials/mixins.scss' as *;
+
+.adventure-form {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    @include form-label;
+  }
+
+  &__blog-title {
+    border-radius: 1rem;
+    padding: 0.25rem;
+  }
+
+  &__content {
+    @include form-textarea;
+    height: 2rem;
+  }
+
+  &__button {
+    @include form-button;
+  }
+}
