@@ -5,9 +5,10 @@ import "./Login.scss";
 
 interface UserProps {
   setUser: (user: object | null) => void;
+  history: any;
 }
 
-const Login: FC<UserProps> = ({ setUser }) => {
+const Login: FC<UserProps> = ({ setUser, history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,6 +18,8 @@ const Login: FC<UserProps> = ({ setUser }) => {
     try {
       const response = await axios.get(`/users/${email}`);
       setUser(response.data);
+      alert("Logged-in!");
+      history.push("/profile");
     } catch (err) {
       console.error(err);
     }

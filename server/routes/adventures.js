@@ -32,9 +32,9 @@ router
   // Create new post
 
   .post("/", (req, res) => {
-    const { user_id, length_of_stay, country } = req.body;
+    const { id, stay, country, title } = req.body;
     console.log(req.body);
-    User.where({ id: user_id })
+    User.where({ id })
       .fetch()
       .then(
         (user) => {
@@ -47,8 +47,9 @@ router
       .then((user) => {
         new Adventure({
           country,
-          length_of_stay,
+          length_of_stay: stay,
           user_id: user.id,
+          title,
         })
           .save()
           .then((newPost) => {

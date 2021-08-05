@@ -16,5 +16,13 @@
   }
   &__button {
     @include form-button;
+
+    &:active {
+      background: navy;
+    }
+
+    &:hover {
+      background: navy;
+    }
   }
 }

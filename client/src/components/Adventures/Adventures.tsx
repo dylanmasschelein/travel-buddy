@@ -5,7 +5,6 @@ import axios from "axios";
 import Adventure, { ActiveAdv } from "../../models/Adventure";
 import ActiveAdvenutre from "../ActiveAdventure";
 import { UserProps } from "../../models/User";
-import PhotoUpload from "../PhotoUpload";
 
 const Adventures: FC<UserProps> = ({ user }) => {
   const [adventures, setAdventures] = useState<Adventure[]>([]);
@@ -34,6 +33,7 @@ const Adventures: FC<UserProps> = ({ user }) => {
         <ActiveAdvenutre user={user} activeAdventure={activeAdventure} />
       ) : (
         <AdventureCardList
+          user={user}
           adventures={adventures}
           setActiveAdventure={setActiveAdventure}
         />
