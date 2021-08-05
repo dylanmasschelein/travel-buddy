@@ -53,12 +53,11 @@ router
       body: { title, caption },
     } = req;
     const locationId = Number(req.params.locationId);
-    console.log(file, "FILE", title, "TITLE", caption, "CAPTION");
-
     Location.where({ id: locationId })
       .fetch()
       .then(
         (location) => {
+          console.log(location);
           return location;
         },
         () => {
@@ -70,11 +69,12 @@ router
           title,
           caption,
           photo_location_id: location.id,
-          file,
+          photo: file.originalname,
         })
           .save()
-          .then((newPost) => {
-            res.status(201).json(newPost);
+          .then((newPhoto) => {
+            console.log(newPhoto);
+            res.status(201).json(newPhoto);
           });
       })
       .catch(() => res.status(404).json({ message: "Error adding location" }));

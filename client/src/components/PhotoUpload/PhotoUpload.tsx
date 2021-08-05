@@ -22,13 +22,14 @@ const PhotoUpload: FC<Props> = ({ location }) => {
     data.append("caption", caption);
 
     try {
-      await axios.post(`/photos/${location[0].id}`, data);
+      const response = await axios.post(`/photos/${location[0].id}`, data);
 
-      console.log("successfull uploaded photo");
+      console.log("successfully uploaded photo");
     } catch (err) {
       console.error(err);
     }
   };
+
   return (
     <>
       <form>
