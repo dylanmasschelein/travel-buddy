@@ -6,7 +6,8 @@ import { loadMapApi } from "../../utils/google-maps-config";
 import AdventureMap from "../AdventureMap";
 import LocationCard from "../LocationCard";
 import { UserProps } from "../../models/User";
-import PhotoUpload from "../PhotoUpload";
+import Photos from "../Photos";
+import Recommendations from "../Recommendations";
 
 type ActiveAdventure = {
   activeAdventure: ActiveAdv;
@@ -87,7 +88,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
   };
 
   return (
-    <div className='active-acventure'>
+    <div className='active-adventure'>
       <h1 className='active-adventure__header'>{activeAdventure.title}</h1>
       <p className='active-adventure__info'>{activeAdventure.country}</p>
       <button onClick={() => addLocation()}>Add Location</button>
@@ -103,7 +104,8 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
         )}
       </div>
       {location && <LocationCard user={user} location={location} />}
-      <PhotoUpload location={location} />
+      {location && <Photos location={location} />}
+      {location && <Recommendations />}
     </div>
   );
 };

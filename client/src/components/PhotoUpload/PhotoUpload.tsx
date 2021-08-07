@@ -32,8 +32,8 @@ const PhotoUpload: FC<Props> = ({ location }) => {
 
   return (
     <>
-      <form>
-        <label htmlFor='file'>
+      <form className='photo-form'>
+        <label htmlFor='file' className='photo-form__label'>
           Upload New Photo
           <input
             type='file'
@@ -44,25 +44,30 @@ const PhotoUpload: FC<Props> = ({ location }) => {
               const file = e.target.files[0];
               setFile(file);
             }}
+            className='photo-form__upload'
           />
         </label>
-        <label htmlFor='title'>
+        <label htmlFor='title' className='photo-form__label'>
           Title
           <input
             type='text'
             id='title'
             onChange={(e) => setTitle(e.target.value)}
+            className='photo-form__input'
           />
         </label>
-        <label htmlFor='caption'>
+        <label htmlFor='caption' className='photo-form__label'>
           Caption
           <input
             type='text'
             id='caption'
             onChange={(e) => setCaption(e.target.value)}
+            className='photo-form__input'
           />
         </label>
-        <button onClick={photoUploadHandler}>Submit photo</button>
+        <button onClick={photoUploadHandler} className='photo-form__button'>
+          Submit photo
+        </button>
       </form>
     </>
   );
