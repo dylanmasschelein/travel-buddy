@@ -4,6 +4,9 @@ const Photo = require("../models/photos");
 const knex = require("knex")(require("../utils/knexfile"));
 const Location = require("../models/locations");
 const multer = require("multer");
+const fs = require("fs");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
 
 const { uploadFile, getFileStream } = require("../s3");
 
@@ -11,35 +14,36 @@ const upload = multer({ dest: "./uploads/" });
 
 router
 
-  .get("/:key", (res, req) => {
-    const key = req.parmas.key;
+  .get("/photoPath/:key", (req, res) => {
+    const key = req.params.key;
+    // console.log(key);
     const readStream = getFileStream(key);
 
     readStream.pipe(res);
   })
-  .get("/active/:locationid", (req, res) => {
-    const locationId = Number(req.params.locationid);
+  // .get("/active/:locationid", (req, res) => {
+  //   const locationId = Number(req.params.locationid);
+  //   knex
+  //     .where({ id: locationId })
+  //     .select("*")
+  //     .from("location")
+  //     .then((data) => {
+  //       console.log(data);
+  //       res.json(data);
+  //     })
+  //     .catch((err) => res.send("Error getting location data"));
+  // })
+  .get("/:photoLocation", (req, res) => {
+    const photoLocation = Number(req.params.photoLocation);
     knex
-      .where({ id: locationId })
+      .where({ photo_location_id: photoLocation })
       .select("*")
-      .from("location")
+      .from("photos")
       .then((data) => {
         console.log(data);
         res.json(data);
       })
-      .catch((err) => res.send("Error getting location data"));
-  })
-  .get("/:adventureid", (req, res) => {
-    const adventureId = Number(req.params.adventureid);
-    knex
-      .where({ adventure_id: adventureId })
-      .select("*")
-      .from("location")
-      .then((data) => {
-        console.log(data);
-        res.json(data);
-      })
-      .catch((err) => res.send("Error getting location data"));
+      .catch((err) => res.send("Error getting photos"));
   })
 
   // Create new post
@@ -50,10 +54,10 @@ router
       body: { title, caption },
     } = req;
     const locationId = Number(req.params.locationId);
-    // Upload tos3 Bucket
-    const result = await uploadFile(file);
-    console.log(result);
 
+    const result = await uploadFile(file);
+    console.log(result, "result");
+    await unlinkFile(file.path);
     Location.where({ id: locationId })
       .fetch()
       .then(
@@ -75,7 +79,7 @@ router
           .save()
           .then((newPhoto) => {
             console.log(newPhoto);
-            res.status(201).json(newPhoto);
+            res.status(201).send(`/photos/${result.key}`);
           });
       })
       .catch(() => res.status(404).json({ message: "Error adding location" }));

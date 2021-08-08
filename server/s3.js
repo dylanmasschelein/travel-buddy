@@ -28,9 +28,9 @@ const uploadFile = async (file) => {
 exports.uploadFile = uploadFile;
 
 // Downloads a file from s3
-const getFileStream = () => {
+const getFileStream = (fileName) => {
   const downloadParams = {
-    Key: fileKey,
+    Key: fileName,
     Bucket: bucketName,
   };
   return s3.getObject(downloadParams).createReadStream();

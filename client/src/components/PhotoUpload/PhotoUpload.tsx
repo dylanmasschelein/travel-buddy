@@ -23,7 +23,7 @@ const PhotoUpload: FC<Props> = ({ location }) => {
 
     try {
       const response = await axios.post(`/photos/${location[0].id}`, data);
-
+      console.log(response);
       console.log("successfully uploaded photo");
     } catch (err) {
       console.error(err);
