@@ -1,0 +1,19 @@
+.photo {
+  max-width: 100%;
+  position: relative;
+
+  &__title {
+    position: absolute;
+    padding-left: 0.5rem;
+  }
+
+  &__caption {
+    position: absolute;
+    top: 1.25rem;
+    padding-left: 0.5rem;
+  }
+
+  &__img {
+    width: 100%;
+  }
+}

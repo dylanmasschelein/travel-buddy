@@ -17,9 +17,6 @@ const LocationCard: FC<LocationProps> = ({ user, location }) => {
       </h2>
 
       <Blog user={user} location={location} />
-      <p>Photos</p>
-      <p>blog/diary/memories</p>
-      <p>Recommendations</p>
     </div>
   );
 };

@@ -3,6 +3,8 @@ import "./Blog.scss";
 import BlogList from "../BlogList";
 import BlogForm from "../BlogForm";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Location } from "../../models/Location";
 
 interface UserProps {
@@ -36,6 +38,8 @@ const Blogs: FC<UserProps> = ({ location }) => {
     getBlogs();
   }, [location]);
 
+  useEffect(() => {}, [blogs]);
+
   const blogPostHandler = async (
     title: string,
     body: string,
@@ -58,10 +62,14 @@ const Blogs: FC<UserProps> = ({ location }) => {
   return (
     <div className='blog'>
       <div className='blog__header'>
-        <h1 className='blog__title'>Blog</h1>
-        <span onClick={() => setToggle(!toggle)} className='blog__add'>
-          +
-        </span>
+        <h1 className='blog__title'>
+          Journal Entries
+          <FontAwesomeIcon
+            icon={faPlusCircle}
+            onClick={() => setToggle(!toggle)}
+            className='blog__add'
+          />
+        </h1>
       </div>
       {toggle && (
         <BlogForm location={location} blogPostHandler={blogPostHandler} />

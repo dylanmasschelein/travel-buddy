@@ -1,4 +1,3 @@
-import React from "react";
 import AdventureCardList from "../AdventureCardList";
 import { useState, useEffect, FC } from "react";
 import axios from "axios";
@@ -11,7 +10,7 @@ const Adventures: FC<UserProps> = ({ user }) => {
   const [activeAdventure, setActiveAdventure] = useState<ActiveAdv | null>(
     null
   );
-  console.log(activeAdventure);
+
   useEffect(() => {
     getAdventureCards();
   }, []);
@@ -21,7 +20,6 @@ const Adventures: FC<UserProps> = ({ user }) => {
       const response = await axios.get("/adventures/");
 
       setAdventures(response.data);
-      console.log(response.data);
     } catch (err) {
       console.error(err);
     }

@@ -2,6 +2,8 @@ import "./Photos.scss";
 import { useState, useEffect, FC } from "react";
 import PhotoUpload from "../PhotoUpload";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import PhotoRender from "../PhotoRender";
 
 interface PhotoProps {
@@ -15,6 +17,8 @@ const Photos: FC<PhotoProps> = ({ location }) => {
   useEffect(() => {
     getPhotos();
   }, []);
+
+  useEffect(() => {}, [photos]);
 
   const getPhotos = async () => {
     const photoLocation = location[0].id;
@@ -30,19 +34,21 @@ const Photos: FC<PhotoProps> = ({ location }) => {
   };
 
   return (
-    <div>
-      <h1 className='photos'>Photos</h1>
-
-      {/* map over photos tables to display photos here after request */}
-      <button onClick={() => setTogglePhoto(!togglePhoto)}>Add Photo</button>
+    <div className='photos'>
+      <h1 className='photos__title'>
+        Photos
+        <FontAwesomeIcon
+          icon={faPlusCircle}
+          onClick={() => setTogglePhoto(!togglePhoto)}
+          className='photos__add'
+        />
+      </h1>
       {togglePhoto && <PhotoUpload location={location} />}
-      {/* {photos.length > 0 ? (
-        photos.map((photo) => <PhotoRender key={photo.id} photo={photo} />)
-      ) : (
-        <h3>No photos</h3>
-      )} */}
-      {photos &&
-        photos.map((photo) => <PhotoRender key={photo.id} photo={photo} />)}
+
+      <div className='photos__container'>
+        {photos &&
+          photos.map((photo) => <PhotoRender key={photo.id} photo={photo} />)}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 .adventure {
   margin: 1rem;
   &__heading {
+    display: flex;
+    justify-content: space-between;
   }
 
   &__add {

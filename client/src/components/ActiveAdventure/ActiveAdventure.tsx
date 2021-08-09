@@ -39,8 +39,6 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
   const [data, setData] = useState<object | null>(null);
   const [location, setLocation] = useState<Location[]>(null);
 
-  // console.log(location[0].id);
-
   useEffect(() => {
     getLocations(activeAdventure.id);
   }, [location]);

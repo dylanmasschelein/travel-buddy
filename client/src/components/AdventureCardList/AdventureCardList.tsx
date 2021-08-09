@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AdventureCardList.scss";
-import AdventureCard from "../AdventureCard";
 import AddAdventureForm from "../AddAdventureForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";

@@ -16,7 +16,11 @@ const PhotoRender: FC<PhotoProp> = ({ photo }) => {
     <div className='photo'>
       <h3 className='photo__title'>{photo.title}</h3>
       <p className='photo__caption'>{photo.caption}</p>
-      <img src={`photos/photoPath/${photo.photo}`} alt={photo.title} />
+      <img
+        src={`photos/photoPath/${photo.photo}`}
+        alt={photo.title}
+        className='photo__img'
+      />
     </div>
   );
 };
