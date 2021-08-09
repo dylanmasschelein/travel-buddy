@@ -41,8 +41,10 @@ router
       country,
       full_address,
       place_id,
+      adventure_id,
     } = req.body;
-    Adventure.where({ id: 1 })
+    console.log(req.body, "---------------------------------------------");
+    Adventure.where({ id: adventure_id })
       .fetch()
       .then(
         (adventure) => {

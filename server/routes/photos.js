@@ -13,7 +13,6 @@ const { uploadFile, getFileStream } = require("../s3");
 const upload = multer({ dest: "./uploads/" });
 
 router
-
   .get("/photoPath/:key", (req, res) => {
     const key = req.params.key;
     // console.log(key);
@@ -54,7 +53,10 @@ router
       body: { title, caption },
     } = req;
     const locationId = Number(req.params.locationId);
-
+    console.log(
+      locationId,
+      "=============================================================================== location id ===================================="
+    );
     const result = await uploadFile(file);
     console.log(result, "result");
     await unlinkFile(file.path);
@@ -82,7 +84,7 @@ router
             res.status(201).send(`/photos/${result.key}`);
           });
       })
-      .catch(() => res.status(404).json({ message: "Error adding location" }));
+      .catch(() => res.status(404).json({ message: "Error adding photo" }));
   })
 
   // Update post

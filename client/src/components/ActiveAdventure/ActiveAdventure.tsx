@@ -39,7 +39,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
   const [data, setData] = useState<object | null>(null);
   const [location, setLocation] = useState<Location[]>(null);
 
-  console.log(location);
+  // console.log(location[0].id);
 
   useEffect(() => {
     getLocations(activeAdventure.id);
@@ -100,6 +100,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
             setData={setData}
             coords={coords}
             getClickedLocation={getClickedLocation}
+            adventureId={activeAdventure.id}
           />
         )}
       </div>

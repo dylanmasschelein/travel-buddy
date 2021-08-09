@@ -1,6 +1,7 @@
 import "./AdventureMap.scss";
 import { FC, useRef, useState } from "react";
 import { useEffect } from "react";
+import ActiveAdventure from "../ActiveAdventure";
 
 interface Coords {
   lat: number;
@@ -11,6 +12,7 @@ interface Map {
   mapType: google.maps.MapTypeId;
   mapTypeControl?: boolean;
   coords: { id: number; coords: Coords }[];
+  adventureId: number;
   setData: (d: object) => void;
   getClickedLocation: (d: number) => void;
 }
@@ -31,6 +33,7 @@ const AdventureMap: FC<Map> = ({
   mapTypeControl = false,
   coords,
   getClickedLocation,
+  adventureId,
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
@@ -93,6 +96,7 @@ const AdventureMap: FC<Map> = ({
             country: results[0].address_components[5].long_name,
             full_address: results[0].formatted_address,
             place_id: results[0].place_id,
+            adventure_id: adventureId,
           };
           setData(data);
 

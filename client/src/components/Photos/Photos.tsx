@@ -2,6 +2,7 @@ import "./Photos.scss";
 import { useState, useEffect, FC } from "react";
 import PhotoUpload from "../PhotoUpload";
 import axios from "axios";
+import PhotoRender from "../PhotoRender";
 
 interface PhotoProps {
   location: any;
@@ -16,12 +17,18 @@ const Photos: FC<PhotoProps> = ({ location }) => {
   }, []);
 
   const getPhotos = async () => {
-    const photoLocation = location[0].photo_location_id;
+    const photoLocation = location[0].id;
+    console.log(photoLocation);
+
     try {
       const response = await axios.get(`/photos/${photoLocation}`);
       setPhotos(response.data);
-    } catch (err) {}
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   return (
     <div>
       <h1 className='photos'>Photos</h1>
@@ -29,9 +36,13 @@ const Photos: FC<PhotoProps> = ({ location }) => {
       {/* map over photos tables to display photos here after request */}
       <button onClick={() => setTogglePhoto(!togglePhoto)}>Add Photo</button>
       {togglePhoto && <PhotoUpload location={location} />}
-      {photos.map((photo) => (
-        <img src={`photos/photoPath/${photo.photo}`} alt='travel photos' />
-      ))}
+      {/* {photos.length > 0 ? (
+        photos.map((photo) => <PhotoRender key={photo.id} photo={photo} />)
+      ) : (
+        <h3>No photos</h3>
+      )} */}
+      {photos &&
+        photos.map((photo) => <PhotoRender key={photo.id} photo={photo} />)}
     </div>
   );
 };
