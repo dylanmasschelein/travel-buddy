@@ -35,7 +35,6 @@ const BlogList: React.FC<BlogProps> = ({ blogs }) => {
         <div onClick={() => getActivePost(blog.location_id)} key={blog.id}>
           <h1>{blog.title}</h1>
           <p>{blog.body}</p>
-          <button>{/* ICON<span>{blog.likes}</span> */}</button>
         </div>
       ))}
     </div>

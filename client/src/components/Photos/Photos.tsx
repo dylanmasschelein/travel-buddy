@@ -15,24 +15,26 @@ const Photos: FC<PhotoProps> = ({ location }) => {
   const [photos, setPhotos] = useState(null);
 
   useEffect(() => {
+    const getPhotos = async () => {
+      const photoLocation = location[0].id;
+      console.log(photoLocation);
+
+      try {
+        const response = await axios.get(`/photos/${photoLocation}`);
+        setPhotos(response.data);
+        console.log(response);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     getPhotos();
   }, []);
 
-  useEffect(() => {}, [photos]);
+  // useEffect(() => {
+  //   getPhotos();
+  // }, [togglePhoto]);
 
-  const getPhotos = async () => {
-    const photoLocation = location[0].id;
-    console.log(photoLocation);
-
-    try {
-      const response = await axios.get(`/photos/${photoLocation}`);
-      setPhotos(response.data);
-      console.log(response);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  useEffect(() => {}, [photos, setPhotos]);
   return (
     <div className='photos'>
       <h1 className='photos__title'>

@@ -74,7 +74,6 @@ const Blogs: FC<UserProps> = ({ location }) => {
       {toggle && (
         <BlogForm location={location} blogPostHandler={blogPostHandler} />
       )}
-      {/* For creating a new blog post, likely will move in the future to its own page*/}
       {blogs && <BlogList blogs={blogs} />}
       {/* <Comments /> */}
     </div>
