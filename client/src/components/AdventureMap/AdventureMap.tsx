@@ -2,6 +2,7 @@ import "./AdventureMap.scss";
 import { FC, useRef, useState } from "react";
 import { useEffect } from "react";
 import ActiveAdventure from "../ActiveAdventure";
+import axios from "axios";
 
 interface Coords {
   lat: number;
@@ -38,6 +39,19 @@ const AdventureMap: FC<Map> = ({
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
   const [marker, setMarker] = useState<Marker>();
+  const [search, setSearch] = useState<string>("");
+
+  const searchPlaces = async () => {
+    console.log(search);
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${search}&inputtype=textquery&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+      );
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const startMap = () => {
     if (!map) {
@@ -48,6 +62,7 @@ const AdventureMap: FC<Map> = ({
   useEffect(() => {
     startMap();
     plotInitialMarkers();
+    if (map) initAutocomplete();
   }, [map, coords]);
 
   const defaultMapStart = () => {
@@ -142,6 +157,69 @@ const AdventureMap: FC<Map> = ({
     }
   };
 
+  const initAutocomplete = () => {
+    // Create the search box and link it to the UI element.
+    const input = document.getElementById("search") as HTMLInputElement;
+    const searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener("bounds_changed", () => {
+      searchBox.setBounds(map.getBounds() as google.maps.LatLngBounds);
+    });
+
+    let markers: google.maps.Marker[] = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener("places_changed", () => {
+      const places = searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      // Clear out the old markers.
+      markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+      markers = [];
+
+      // For each place, get the icon, name and location.
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach((place) => {
+        if (!place.geometry || !place.geometry.location) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        const icon = {
+          url: place.icon as string,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25),
+        };
+
+        // Create a marker for each place.
+        markers.push(
+          new google.maps.Marker({
+            map,
+            icon,
+            title: place.name,
+            position: place.geometry.location,
+          })
+        );
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+  };
+
   // const getIconAttributes = (iconColor: string) => {
   //   return {
   //     path: "M11.0639 15.3003L26.3642 2.47559e-05L41.6646 15.3003L26.3638 51.3639L11.0639 15.3003 M22,17.5a4.5,4.5 0 1,0 9,0a4.5,4.5 0 1,0 -9,0Z",
@@ -154,6 +232,16 @@ const AdventureMap: FC<Map> = ({
   // };
   return (
     <div className='adventure-map'>
+      <input
+        type='text'
+        id='search'
+        className='adventure-map__search'
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button onClick={() => searchPlaces()} className='adventure-map__button'>
+        Search
+      </button>
       <div ref={mapRef} className='adventure-map__map'></div>
     </div>
   );

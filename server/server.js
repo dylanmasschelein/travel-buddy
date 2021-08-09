@@ -5,12 +5,11 @@ const blogRoutes = require("./routes/blog.js");
 const adventureRoutes = require("./routes/adventures.js");
 const locationRoutes = require("./routes/locations.js");
 const photoRoutes = require("./routes/photos");
-
-require("dotenv").config();
 const cors = require("cors");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 8080;
-app.use(cors());
+app.use(cors(``));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
