@@ -8,33 +8,12 @@ import PhotoRender from "../PhotoRender";
 
 interface PhotoProps {
   location: any;
+  photos: any;
 }
 
-const Photos: FC<PhotoProps> = ({ location }) => {
+const Photos: FC<PhotoProps> = ({ location, photos }) => {
   const [togglePhoto, setTogglePhoto] = useState(false);
-  const [photos, setPhotos] = useState(null);
 
-  useEffect(() => {
-    const getPhotos = async () => {
-      const photoLocation = location[0].id;
-      console.log(photoLocation);
-
-      try {
-        const response = await axios.get(`/photos/${photoLocation}`);
-        setPhotos(response.data);
-        console.log(response);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getPhotos();
-  }, []);
-
-  // useEffect(() => {
-  //   getPhotos();
-  // }, [togglePhoto]);
-
-  useEffect(() => {}, [photos, setPhotos]);
   return (
     <div className='photos'>
       <h1 className='photos__title'>

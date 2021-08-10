@@ -13,8 +13,7 @@ const PhotoUpload: FC<Props> = ({ location }) => {
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
 
-  console.log(location);
-  const photoUploadHandler = async (e: any) => {
+  const photoUploadHandler = async (e: FormEvent) => {
     e.preventDefault();
     const data = new FormData();
     data.append("photo", file);
@@ -40,10 +39,7 @@ const PhotoUpload: FC<Props> = ({ location }) => {
             name='file'
             id='file'
             accept='image/*'
-            onChange={(e) => {
-              const file = e.target.files[0];
-              setFile(file);
-            }}
+            onChange={(e) => setFile(e.target.files[0])}
             className='photo-form__upload'
           />
         </label>

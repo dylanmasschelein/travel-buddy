@@ -22,6 +22,13 @@ type Coords = {
   };
 };
 
+interface Blog {
+  title: string;
+  body: string;
+  location_id: number;
+  id: number;
+}
+
 interface Location {
   abbrv_province: string;
   adventure_id: number;
@@ -38,6 +45,8 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [data, setData] = useState<object | null>(null);
   const [location, setLocation] = useState<Location[]>(null);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [photos, setPhotos] = useState(null);
 
   useEffect(() => {
     getLocations(activeAdventure.id);
@@ -79,7 +88,29 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
     try {
       const location = await axios.get(`/locations/active/${id}`);
       setLocation(location.data);
+      getBlogs(id);
+      getPhotos(id);
       console.log("Location Recieved!!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getBlogs = async (location_id) => {
+    try {
+      const response = await axios.get(`/blogs/${location_id}`);
+
+      setBlogs(response.data);
+      console.log("Recieved and set blogs!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getPhotos = async (id) => {
+    try {
+      const response = await axios.get(`/photos/${id}`);
+      setPhotos(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -102,8 +133,10 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
           />
         )}
       </div>
-      {location && <LocationCard user={user} location={location} />}
-      {location && <Photos location={location} />}
+      {location && (
+        <LocationCard blogs={blogs} user={user} location={location} />
+      )}
+      {location && <Photos photos={photos} location={location} />}
       {location && <Recommendations />}
     </div>
   );
