@@ -1,7 +1,6 @@
 import "./Photos.scss";
-import { useState, useEffect, FC } from "react";
+import { useState, FC } from "react";
 import PhotoUpload from "../PhotoUpload";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import PhotoRender from "../PhotoRender";

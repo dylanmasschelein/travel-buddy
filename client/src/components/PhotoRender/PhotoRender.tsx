@@ -12,6 +12,7 @@ interface PhotoProp {
 }
 
 const PhotoRender: FC<PhotoProp> = ({ photo }) => {
+  console.log(photo.photo);
   return (
     <div className='photo'>
       <h3 className='photo__title'>{photo.title}</h3>

@@ -11,7 +11,7 @@ type Adventure = {
     title: string;
     country: string;
     length_of_stay: number;
-    img: string;
+    photo: string;
   }[];
   setActiveAdventure: (n: object) => void;
   user: { name: string; email: string; id: number };
@@ -24,35 +24,26 @@ const AdventureCardList: React.FC<Adventure> = ({
 }) => {
   const [openForm, setOpenForm] = useState(false);
 
-  const newAdventureHandler = async (id, country, stay, title) => {
-    const data = {
-      id,
-      country,
-      stay,
-      title,
-    };
+  const newAdventureHandler = async (id, country, stay, title, file) => {
+    const data = new FormData();
+    data.append("photo", file);
+    data.append("id", id);
+    data.append("country", country);
+    data.append("stay", stay);
+    data.append("title", title);
+
     try {
       await axios.post(`/adventures/`, data);
 
       console.log("New Adventure created!");
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   return (
     <div className='adventure'>
-      <h1 className='adventure__heading'>
-        Your Adventures
-        <FontAwesomeIcon
-          icon={faPlusCircle}
-          onClick={() => setOpenForm(!openForm)}
-          className='adventure__new'
-        />
-      </h1>
-      {openForm && (
-        <AddAdventureForm
-          user={user}
-          newAdventureHandler={newAdventureHandler}
-        />
-      )}
+      <h1 className='adventure__heading'>Your Adventures</h1>
       <div className='adventure__list'>
         {adventures.map((adventure, i) => (
           <div
@@ -63,10 +54,29 @@ const AdventureCardList: React.FC<Adventure> = ({
             <h2 className='adventure__title'>{adventure.title}</h2>
             <p className='adventure__country'>{adventure.country}</p>
             <p className='adventure__stay'>{adventure.length_of_stay} year</p>
-            <img src={Aus} className='adventure__img' />
+            <img
+              src={`/adventures/photo/${adventure.photo}`}
+              className='adventure__img'
+            />
           </div>
         ))}
       </div>
+      <h3 className='adventure__add'>
+        Add new adventure
+        <FontAwesomeIcon
+          icon={faPlusCircle}
+          onClick={() => setOpenForm(!openForm)}
+          className='adventure__new'
+        />
+      </h3>
+      {openForm && (
+        <>
+          <AddAdventureForm
+            user={user}
+            newAdventureHandler={newAdventureHandler}
+          />
+        </>
+      )}
     </div>
   );
 };

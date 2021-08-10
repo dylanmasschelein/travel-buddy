@@ -20,18 +20,7 @@ router
 
     readStream.pipe(res);
   })
-  // .get("/active/:locationid", (req, res) => {
-  //   const locationId = Number(req.params.locationid);
-  //   knex
-  //     .where({ id: locationId })
-  //     .select("*")
-  //     .from("location")
-  //     .then((data) => {
-  //       console.log(data);
-  //       res.json(data);
-  //     })
-  //     .catch((err) => res.send("Error getting location data"));
-  // })
+
   .get("/:photoLocation", (req, res) => {
     const photoLocation = Number(req.params.photoLocation);
     knex
@@ -53,13 +42,10 @@ router
       body: { title, caption },
     } = req;
     const locationId = Number(req.params.locationId);
-    console.log(
-      locationId,
-      "=============================================================================== location id ===================================="
-    );
+
     const result = await uploadFile(file);
-    console.log(result, "result");
     await unlinkFile(file.path);
+
     Location.where({ id: locationId })
       .fetch()
       .then(

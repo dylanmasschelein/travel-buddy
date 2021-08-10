@@ -2,22 +2,22 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProfilePage.scss";
 import Adventures from "../../components/Adventures";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { UserProps } from "../../models/User";
 
 const ProfilePage: FC<UserProps> = ({ user }) => {
-  const [profNav, setProfNav] = useState(false);
+  // const [profNav, setProfNav] = useState(false);
 
   return (
     <div className='profile'>
-      <FontAwesomeIcon
+      {/* <FontAwesomeIcon
         icon={faBars}
         onClick={() => setProfNav(!profNav)}
         className='profile__bars'
-      />
-      {user && <h3>Logged in</h3>}
-      {profNav && (
+      /> */}
+      {/* {user && <h3>Logged in</h3>} */}
+      {/* {profNav && (
         <nav className='profile__nav'>
           <Link to='/profile/blog' className='profile__link'>
             Blog
@@ -35,7 +35,7 @@ const ProfilePage: FC<UserProps> = ({ user }) => {
             Bucket list
           </Link>
         </nav>
-      )}
+      )} */}
 
       <Adventures user={user} />
     </div>

@@ -2,13 +2,12 @@ import { FC } from "react";
 import "./AdventureCard.scss";
 import Adventure from "../../models/Adventure";
 
-const AdventureCard: FC<Adventure> = (adventure) => {
+const AdventureCard: FC<Adventure> = () => {
   return (
     <div>
-      <h2>{adventure.title}</h2>
+      {/* <h2>{adventure.title}</h2>
       <p>{adventure.country}</p>
-      <p>{adventure.length_of_stay}</p>
-      <p>{adventure.img}</p>
+      <p>{adventure.length_of_stay}</p> */}
     </div>
   );
 };

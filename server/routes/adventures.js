@@ -3,9 +3,22 @@ const router = express.Router();
 const User = require("../models/users.js");
 const knex = require("knex")(require("../utils/knexfile"));
 const Adventure = require("../models/adventures");
+const multer = require("multer");
+const fs = require("fs");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
+
+const { uploadFile, getFileStream } = require("../s3");
+
+const upload = multer({ dest: "./uploads/" });
 
 router
+  .get("/photo/:key", (req, res) => {
+    const key = req.params.key;
+    const readStream = getFileStream(key);
 
+    readStream.pipe(res);
+  })
   .get("/:userid", (req, res) => {
     knex
       .where({ user_id: req.params.userid })
@@ -31,9 +44,16 @@ router
 
   // Create new post
 
-  .post("/", (req, res) => {
-    const { id, stay, country, title } = req.body;
-    console.log(req.body);
+  .post("/", upload.single("photo"), async (req, res) => {
+    const {
+      file,
+      body: { id, stay, country, title },
+    } = req;
+
+    const result = await uploadFile(file);
+    await unlinkFile(file.path);
+    console.log(file);
+
     User.where({ id })
       .fetch()
       .then(
@@ -50,6 +70,7 @@ router
           length_of_stay: stay,
           user_id: user.id,
           title,
+          photo: file.filename,
         })
           .save()
           .then((newPost) => {

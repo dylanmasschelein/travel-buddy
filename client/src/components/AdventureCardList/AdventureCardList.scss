@@ -2,10 +2,13 @@
   margin: 1rem;
   &__heading {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    padding: 0.5rem 0;
   }
 
   &__add {
+    display: flex;
+    justify-content: space-between;
   }
 
   &__list {
@@ -17,9 +20,10 @@
 
   &__card {
     height: 8rem;
-    border: 2px solid navy;
+    border: 5px solid navy;
     margin: 1rem 0;
-    border-radius: 1rem;
+    border-radius: 1.1rem;
+    box-shadow: 10px 10px 8px #888888;
     padding: 1rem;
     position: relative;
     display: flex;

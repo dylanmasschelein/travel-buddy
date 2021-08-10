@@ -3,6 +3,7 @@ import { FC, useRef, useState } from "react";
 import { useEffect } from "react";
 import ActiveAdventure from "../ActiveAdventure";
 import axios from "axios";
+import pinIcon from "../../assets/images/tack.png";
 
 interface Coords {
   lat: number;
