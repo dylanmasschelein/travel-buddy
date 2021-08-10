@@ -1,18 +1,11 @@
 import { FC } from "react";
 import "./PhotoRender.scss";
-
+import { Photo } from "../../models/Photos";
 interface PhotoProp {
-  photo: {
-    id: number;
-    photo_location_id: number;
-    photo: string;
-    title: string;
-    caption: string;
-  };
+  photo: Photo;
 }
 
 const PhotoRender: FC<PhotoProp> = ({ photo }) => {
-  console.log(photo.photo);
   return (
     <div className='photo'>
       <h3 className='photo__title'>{photo.title}</h3>

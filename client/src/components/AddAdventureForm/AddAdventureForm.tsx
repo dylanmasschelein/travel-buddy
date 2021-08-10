@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, FC } from "react";
 import "./AddAdventureForm.scss";
+import { User } from "../../models/User";
 
 interface Props {
-  user: { name: string; email: string; id: number };
+  user: User;
   newAdventureHandler: (
     id: number,
     country: string,

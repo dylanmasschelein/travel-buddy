@@ -20,5 +20,6 @@
 
   &__button {
     @include form-button;
+    margin-bottom: 1rem;
   }
 }

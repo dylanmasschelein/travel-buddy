@@ -1,4 +1,4 @@
-export interface Location {
+export default interface Location {
   abbrv_province: string;
   adventure_id: number;
   city: string;

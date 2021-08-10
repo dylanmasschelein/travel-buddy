@@ -1,17 +1,14 @@
 import "./LocationCard.scss";
 import { FC } from "react";
 import Blog from "../Blog";
-import { Location } from "../../models/Location";
-interface Blog {
-  title: string;
-  body: string;
-  location_id: number;
-  id: number;
-}
+import Location from "../../models/Location";
+import { Blog as Blogs } from "../../models/Blog";
+import { User } from "../../models/User";
+
 interface LocationProps {
   location: Location[];
-  user: { name: string; email: string; id: number };
-  blogs: Blog[];
+  user: User;
+  blogs: Blogs[];
 }
 
 const LocationCard: FC<LocationProps> = ({ blogs, user, location }) => {

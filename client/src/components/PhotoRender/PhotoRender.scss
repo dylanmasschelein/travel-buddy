@@ -4,16 +4,24 @@
 
   &__title {
     position: absolute;
-    padding-left: 0.5rem;
+    padding: 0.5rem;
+    background: #d6e6ff;
+    border-radius: 1rem 1rem 0 0;
+    margin: 0.25rem 0 0 0.25rem;
   }
 
   &__caption {
     position: absolute;
-    top: 1.25rem;
-    padding-left: 0.5rem;
+    top: 2rem;
+    padding: 0.5rem;
+    background: #d6e6ff;
+    border-radius: 0 1rem 1rem 1rem;
+    margin: 0 0 0 0.25rem;
   }
 
   &__img {
     width: 100%;
+    border-radius: 1rem;
+    border: 2px solid navy;
   }
 }

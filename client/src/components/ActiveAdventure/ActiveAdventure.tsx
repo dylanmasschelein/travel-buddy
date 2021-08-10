@@ -5,42 +5,22 @@ import { ActiveAdv } from "../../models/Adventure";
 import { loadMapApi } from "../../utils/google-maps-config";
 import AdventureMap from "../AdventureMap";
 import LocationCard from "../LocationCard";
-import { UserProps } from "../../models/User";
 import Photos from "../Photos";
 import Recommendations from "../Recommendations";
+import { Coords } from "../../models/Adventure";
+import { Blog } from "../../models/Blog";
+import { User } from "../../models/User";
+import Location from "../../models/Location";
 
-type ActiveAdventure = {
+interface ActiveAdventureProps {
   activeAdventure: ActiveAdv;
-  user: { name: string; email: string; id: number };
-};
-
-type Coords = {
-  id: number;
-  coords: {
-    lat: number;
-    lng: number;
-  };
-};
-
-interface Blog {
-  title: string;
-  body: string;
-  location_id: number;
-  id: number;
+  user: User;
 }
 
-interface Location {
-  abbrv_province: string;
-  adventure_id: number;
-  city: string;
-  coords: string;
-  country: string;
-  full_address: string;
-  id: number;
-  place_id: string;
-}
-
-const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
+const ActiveAdventure: FC<ActiveAdventureProps> = ({
+  user,
+  activeAdventure,
+}) => {
   const [coords, setCoords] = useState<Coords[]>([]);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [data, setData] = useState<object | null>(null);
@@ -118,9 +98,10 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
 
   return (
     <div className='active-adventure'>
-      <h1 className='active-adventure__header'>{activeAdventure.title}</h1>
-      <p className='active-adventure__info'>{activeAdventure.country}</p>
-      <button onClick={() => addLocation()}>Add Location</button>
+      <div className='active-adventure__container'>
+        <h1 className='active-adventure__header'>{activeAdventure.title}</h1>
+        {/* <p className='active-adventure__info'>{activeAdventure.country}</p> */}
+      </div>
       <div className='active-adventure__map'>
         {scriptLoaded && (
           <AdventureMap
@@ -130,6 +111,7 @@ const ActiveAdventure: FC<ActiveAdventure> = ({ user, activeAdventure }) => {
             coords={coords}
             getClickedLocation={getClickedLocation}
             adventureId={activeAdventure.id}
+            addLocation={addLocation}
           />
         )}
       </div>

@@ -1,0 +1,11 @@
+.location {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__city {
+    text-align: center;
+    padding: 1rem 1rem 0.5rem 1rem;
+    border-bottom: 2px solid navy;
+  }
+}

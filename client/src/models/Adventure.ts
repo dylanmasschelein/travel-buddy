@@ -12,3 +12,11 @@ export interface ActiveAdv {
   img: any;
   id: number;
 }
+
+export interface Coords {
+  id: number;
+  coords: {
+    lat: number;
+    lng: number;
+  };
+}

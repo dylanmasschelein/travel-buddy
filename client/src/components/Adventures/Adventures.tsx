@@ -3,7 +3,11 @@ import { useState, useEffect, FC } from "react";
 import axios from "axios";
 import Adventure, { ActiveAdv } from "../../models/Adventure";
 import ActiveAdvenutre from "../ActiveAdventure";
-import { UserProps } from "../../models/User";
+import { User } from "../../models/User";
+
+interface UserProps {
+  user: User;
+}
 
 const Adventures: FC<UserProps> = ({ user }) => {
   const [adventures, setAdventures] = useState<Adventure[]>([]);

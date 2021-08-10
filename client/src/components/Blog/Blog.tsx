@@ -6,18 +6,14 @@ import axios from "axios";
 import CommentForm from "../CommentForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { Location } from "../../models/Location";
+import Location from "../../models/Location";
+import { Blog } from "../../models/Blog";
+import { User } from "../../models/User";
 
 interface UserProps {
-  user: { name: string; email: string; id: number };
+  user: User;
   location: Location[];
   blogs: Blog[];
-}
-interface Blog {
-  title: string;
-  body: string;
-  location_id: number;
-  id: number;
 }
 
 const Blogs: FC<UserProps> = ({ location, blogs }) => {

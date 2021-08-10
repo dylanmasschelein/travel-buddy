@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./BlogForm.scss";
-import { Location } from "../../models/Location";
+import Location from "../../models/Location";
 
 interface PostProps {
   blogPostHandler: (title: string, post: string, location_id: number) => void;

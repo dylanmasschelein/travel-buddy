@@ -2,7 +2,7 @@ import axios from "axios";
 import { FormEvent } from "react";
 import { FC, useState } from "react";
 import "./PhotoUpload.scss";
-import { Location } from "../../models/Location";
+import Location from "../../models/Location";
 
 interface Props {
   location: Location[];

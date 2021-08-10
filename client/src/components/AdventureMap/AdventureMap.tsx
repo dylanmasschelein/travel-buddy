@@ -4,19 +4,18 @@ import { useEffect } from "react";
 import ActiveAdventure from "../ActiveAdventure";
 import axios from "axios";
 import pinIcon from "../../assets/images/tack.png";
-
-interface Coords {
-  lat: number;
-  lng: number;
-}
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { Coords } from "../../models/Adventure";
 
 interface Map {
   mapType: google.maps.MapTypeId;
   mapTypeControl?: boolean;
-  coords: { id: number; coords: Coords }[];
+  coords: Coords[];
   adventureId: number;
   setData: (d: object) => void;
   getClickedLocation: (d: number) => void;
+  addLocation: () => void;
 }
 
 interface Marker {
@@ -36,6 +35,7 @@ const AdventureMap: FC<Map> = ({
   coords,
   getClickedLocation,
   adventureId,
+  addLocation,
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
@@ -67,7 +67,7 @@ const AdventureMap: FC<Map> = ({
   }, [map, coords]);
 
   const defaultMapStart = () => {
-    const defaultCenter = new google.maps.LatLng(12, -75);
+    const defaultCenter = new google.maps.LatLng(-33.865143, 151.208755);
     initMap(5, defaultCenter);
   };
 
@@ -179,7 +179,7 @@ const AdventureMap: FC<Map> = ({
         return;
       }
 
-      // Clear out the old markers.
+      // Clear out the old mfarkers.
       markers.forEach((marker) => {
         marker.setMap(null);
       });
@@ -240,9 +240,11 @@ const AdventureMap: FC<Map> = ({
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button onClick={() => searchPlaces()} className='adventure-map__button'>
-        Search
-      </button>
+      <FontAwesomeIcon
+        onClick={() => addLocation()}
+        className='adventure-map__icon'
+        icon={faPlusSquare}
+      />
       <div ref={mapRef} className='adventure-map__map'></div>
     </div>
   );

@@ -4,20 +4,16 @@ import "./AdventureCardList.scss";
 import AddAdventureForm from "../AddAdventureForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import Aus from "../../assets/images/Austrailia.jpg";
+import Adventure from "../../models/Adventure";
+import { User } from "../../models/User";
 
-type Adventure = {
-  adventures: {
-    title: string;
-    country: string;
-    length_of_stay: number;
-    photo: string;
-  }[];
+interface AdventureProps {
+  adventures: Adventure[];
   setActiveAdventure: (n: object) => void;
-  user: { name: string; email: string; id: number };
-};
+  user: User;
+}
 
-const AdventureCardList: React.FC<Adventure> = ({
+const AdventureCardList: React.FC<AdventureProps> = ({
   adventures,
   setActiveAdventure,
   user,

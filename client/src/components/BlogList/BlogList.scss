@@ -1,0 +1,15 @@
+.blog-list {
+  border: 2px solid navy;
+  border-radius: 1rem;
+  box-shadow: 10px 10px 8px #888888;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #d6e6ff;
+  &__title {
+    border-bottom: 2px solid navy;
+    margin-bottom: 0.5rem;
+  }
+
+  &__body {
+  }
+}
