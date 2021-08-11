@@ -12,7 +12,6 @@ router
       .select("*")
       .from("location")
       .then((data) => {
-        console.log(data);
         res.json(data);
       })
       .catch((err) => res.send("Error getting location data"));
@@ -24,7 +23,6 @@ router
       .select("*")
       .from("location")
       .then((data) => {
-        console.log(data);
         res.json(data);
       })
       .catch((err) => res.send("Error getting location data"));
@@ -43,7 +41,7 @@ router
       place_id,
       adventure_id,
     } = req.body;
-    console.log(req.body, "---------------------------------------------");
+
     Adventure.where({ id: adventure_id })
       .fetch()
       .then(

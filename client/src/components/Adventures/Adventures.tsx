@@ -21,7 +21,7 @@ const Adventures: FC<UserProps> = ({ user }) => {
 
   const getAdventureCards = async () => {
     try {
-      const response = await axios.get("/adventures/");
+      const response = await axios.get("/adventures/all");
 
       setAdventures(response.data);
     } catch (err) {

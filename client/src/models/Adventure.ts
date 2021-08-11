@@ -3,6 +3,7 @@ export default interface Adventure {
   country: string;
   length_of_stay: number;
   photo: string;
+  id: number;
 }
 
 export interface ActiveAdv {

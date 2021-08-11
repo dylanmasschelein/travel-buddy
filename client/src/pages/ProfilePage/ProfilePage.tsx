@@ -4,9 +4,9 @@ import "./ProfilePage.scss";
 import Adventures from "../../components/Adventures";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { UserProps } from "../../models/User";
+import { User } from "../../models/User";
 
-const ProfilePage: FC<UserProps> = ({ user }) => {
+const ProfilePage: FC<{ user: User }> = ({ user }) => {
   // const [profNav, setProfNav] = useState(false);
 
   return (

@@ -13,7 +13,6 @@ router
       .select("*")
       .from("blogs")
       .then((data) => {
-        console.log(data);
         res.json(data);
       })
       .catch((err) => res.send("Error getting blogs for this location"));
@@ -24,7 +23,6 @@ router
       .select("*")
       .from("blogs")
       .then((data) => {
-        console.log(data);
         res.json(data);
       })
       .catch((err) => res.send("Error getting all blogs"));
@@ -33,7 +31,6 @@ router
   // Create new post
   .post("/", (req, res) => {
     const { location_id, title, body } = req.body;
-    console.log(req.body);
     Location.where({ id: location_id })
       .fetch()
       .then(

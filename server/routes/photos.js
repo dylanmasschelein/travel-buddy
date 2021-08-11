@@ -15,7 +15,6 @@ const upload = multer({ dest: "./uploads/" });
 router
   .get("/photoPath/:key", (req, res) => {
     const key = req.params.key;
-    // console.log(key);
     const readStream = getFileStream(key);
 
     readStream.pipe(res);
@@ -28,7 +27,6 @@ router
       .select("*")
       .from("photos")
       .then((data) => {
-        console.log(data);
         res.json(data);
       })
       .catch((err) => res.send("Error getting photos"));
@@ -50,7 +48,6 @@ router
       .fetch()
       .then(
         (location) => {
-          console.log(location);
           return location;
         },
         () => {
@@ -66,7 +63,6 @@ router
         })
           .save()
           .then((newPhoto) => {
-            console.log(newPhoto);
             res.status(201).send(`/photos/${result.key}`);
           });
       })

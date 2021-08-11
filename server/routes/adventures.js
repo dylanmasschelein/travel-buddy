@@ -13,30 +13,41 @@ const { uploadFile, getFileStream } = require("../s3");
 const upload = multer({ dest: "./uploads/" });
 
 router
+  .get("/all", (req, res) => {
+    knex
+      .select("*")
+      .from("adventures")
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => res.send("Error getting warehouses data"));
+  })
+  .get("/active/:id", (req, res) => {
+    console.log(req.params.id);
+    knex("adventures")
+      .where({ id: Number(req.params.id) })
+      // .select("*")
+      // .from("adventures")
+      // .where({ id: req.params.id })
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => res.send("Error getting warehouses data"));
+  })
+
   .get("/photo/:key", (req, res) => {
     const key = req.params.key;
     const readStream = getFileStream(key);
 
     readStream.pipe(res);
   })
+
   .get("/:userid", (req, res) => {
     knex
       .where({ user_id: req.params.userid })
       .select("*")
       .from("adventures")
       .then((data) => {
-        console.log(data);
-        res.json(data);
-      })
-      .catch((err) => res.send("Error getting warehouses data"));
-  })
-
-  .get("/", (req, res) => {
-    knex
-      .select("*")
-      .from("adventures")
-      .then((data) => {
-        console.log(data);
         res.json(data);
       })
       .catch((err) => res.send("Error getting warehouses data"));
@@ -52,7 +63,6 @@ router
 
     const result = await uploadFile(file);
     await unlinkFile(file.path);
-    console.log(file);
 
     User.where({ id })
       .fetch()
@@ -84,14 +94,20 @@ router
 
   // Update post
   .put("/:id", (req, res) => {
-    Blog.where({ id: req.params.id })
+    const {
+      file,
+      body: { country, stay, user_id, title },
+    } = req;
+    Adventure.where({ id: req.params.id })
       .fetch()
-      .then((post) => {
-        post
+      .then((adventure) => {
+        adventure
           .save({
-            title: req.body.title,
-            body: req.body.content,
-            user_id: post.user_id,
+            country,
+            length_of_stay: stay,
+            user_id: user_id,
+            title,
+            // photo: file.filename,
           })
           .then((updatedPost) => {
             res.status(200).json(updatedPost);
