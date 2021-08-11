@@ -1,34 +1,28 @@
-import "./ModalWindow.scss";
+import "./EditAdventure.scss";
 import { FC, useState, useEffect, FormEvent } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-interface ModalProps {
-  editAdventure: (
-    e: FormEvent,
-    id: number,
-    title: string,
-    country: string,
-    stay: number,
-    file: any
-  ) => void;
+interface Props {
+  setEdit: (n: boolean) => void;
   id: number;
+  edit: boolean;
 }
 
-const ModalWindow: FC<ModalProps> = ({ id, editAdventure }) => {
+const EditAdventure: FC<Props> = ({ edit, setEdit, id }) => {
   const [title, setTitle] = useState("");
   const [country, setCountry] = useState("");
   const [stay, setStay] = useState(null);
-  const [file, setFile] = useState(null);
 
   const getAdventureData = async (id) => {
     try {
       const response = await axios.get(`/adventures/active/${id}`);
       console.log(response.data[0]);
-      const { title, length_of_stay, photo, country } = response.data[0];
+      const { title, length_of_stay, country } = response.data[0];
       setTitle(title);
       setCountry(country);
       setStay(length_of_stay);
-      setFile(photo);
       console.log(response.data[0]);
     } catch (err) {
       console.error(err);
@@ -37,15 +31,32 @@ const ModalWindow: FC<ModalProps> = ({ id, editAdventure }) => {
 
   useEffect(() => {
     getAdventureData(id);
-  }, []);
+  }, [edit]);
 
+  const editAdventure = async (e) => {
+    e.preventDefault();
+    const data = {
+      title,
+      country,
+      stay,
+    };
+    try {
+      await axios.put(`/adventures/${id}`, data);
+      setEdit(false);
+      console.log("Updated adventure!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div className='modal'>
+      <FontAwesomeIcon
+        icon={faTimes}
+        onClick={() => setEdit(false)}
+        className='modal__close'
+      />
       <div className='modal__window'>
-        <form
-          className='adventure-form'
-          onSubmit={(e) => editAdventure(e, id, title, country, stay, file)}
-        >
+        <form className='adventure-form' onSubmit={(e) => editAdventure(e)}>
           <label htmlFor='title' className='adventure-form__label'>
             Title
             <input
@@ -74,17 +85,6 @@ const ModalWindow: FC<ModalProps> = ({ id, editAdventure }) => {
               onChange={(e) => setStay(Number(e.target.value))}
             ></textarea>
           </label>
-          <label htmlFor='photo' className='adventure-form__label'>
-            Photo
-            <input
-              type='file'
-              name='file'
-              accept='image/*'
-              id='photo'
-              className='adventure-form__content'
-              onChange={(e) => setFile(e.target.files[0])}
-            ></input>
-          </label>
           <button type='submit' className='adventure-form__button'>
             Submit Edit
           </button>
@@ -94,4 +94,4 @@ const ModalWindow: FC<ModalProps> = ({ id, editAdventure }) => {
   );
 };
 
-export default ModalWindow;
+export default EditAdventure;

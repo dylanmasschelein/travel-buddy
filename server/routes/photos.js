@@ -69,37 +69,19 @@ router
       .catch(() => res.status(404).json({ message: "Error adding photo" }));
   })
 
-  // Update post
-  .put("/:id", (req, res) => {
-    Blog.where({ id: req.params.id })
-      .fetch()
-      .then((post) => {
-        post
-          .save({
-            title: req.body.title,
-            body: req.body.content,
-            user_id: post.user_id,
-          })
-          .then((updatedPost) => {
-            res.status(200).json(updatedPost);
-          });
-      })
-      .catch(() => {
-        res.status(404).json({ message: "Error updating post" });
-      });
-  })
-
   // Delete post
   .delete("/:id", (req, res) => {
-    Blog.where({ id: req.params.id })
+    Photo.where({ id: Number(req.params.id) })
       .destroy()
       .then(() => {
-        res.status(200).json({ message: `Post ${req.params.id} deleted` });
+        res.status(200).json({
+          message: `Photo:                                                                                                                                  ${req.params.id} deleted`,
+        });
       })
       .catch(() =>
         res
           .status(400)
-          .json({ message: `Error deleting post ${req.params.id}` })
+          .json({ message: `Error deleting phhoto ${req.params.id}` })
       );
   });
 

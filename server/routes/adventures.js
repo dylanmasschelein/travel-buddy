@@ -94,20 +94,18 @@ router
 
   // Update post
   .put("/:id", (req, res) => {
-    const {
-      file,
-      body: { country, stay, user_id, title },
-    } = req;
+    const { country, stay, user_id, title } = req.body;
+    console.log("hit");
     Adventure.where({ id: req.params.id })
       .fetch()
       .then((adventure) => {
+        console.log(adventure);
         adventure
           .save({
             country,
             length_of_stay: stay,
             user_id: user_id,
             title,
-            // photo: file.filename,
           })
           .then((updatedPost) => {
             res.status(200).json(updatedPost);
@@ -120,7 +118,7 @@ router
 
   // Delete post
   .delete("/:id", (req, res) => {
-    Blog.where({ id: req.params.id })
+    Adventure.where({ id: req.params.id })
       .destroy()
       .then(() => {
         res.status(200).json({ message: `Post ${req.params.id} deleted` });

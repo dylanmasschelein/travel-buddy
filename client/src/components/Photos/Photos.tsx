@@ -27,7 +27,9 @@ const Photos: FC<PhotoProps> = ({ location, photos }) => {
 
       <div className='photos__container'>
         {photos &&
-          photos.map((photo) => <PhotoRender key={photo.id} photo={photo} />)}
+          photos.map((photo) => (
+            <PhotoRender id={photo.id} key={photo.id} photo={photo} />
+          ))}
       </div>
     </div>
   );

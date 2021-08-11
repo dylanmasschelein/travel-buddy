@@ -1,0 +1,23 @@
+.modal {
+  display: flex;
+  padding-top: 8rem;
+  justify-content: center;
+  position: fixed;
+  background: rgba(35, 41, 64, 0.7);
+  top: 0px;
+  right: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999999;
+
+  &__window {
+    display: flex;
+    flex-direction: column;
+    // border-radius: $border-radius;
+    // background: $color-secondary;
+    align-items: center;
+    width: 20rem;
+    height: 12rem;
+    z-index: 9999999;
+  }
+}

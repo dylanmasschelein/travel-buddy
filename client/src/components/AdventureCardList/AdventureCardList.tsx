@@ -3,10 +3,14 @@ import axios from "axios";
 import "./AdventureCardList.scss";
 import AddAdventureForm from "../AddAdventureForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlusCircle,
+  faEdit,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import Adventure from "../../models/Adventure";
 import { User } from "../../models/User";
-import ModalWindow from "../ModalWindow";
+import EditAdventure from "../EditAdventure";
 
 interface AdventureProps {
   adventures: Adventure[];
@@ -40,16 +44,10 @@ const AdventureCardList: React.FC<AdventureProps> = ({
     }
   };
 
-  const editAdventure = async (e, title, country, stay, file) => {
-    e.preventDefault();
-    const data = {
-      title,
-      country,
-      stay,
-      file,
-    };
+  const deleteAdventure = async (id) => {
     try {
-      await axios.put(`/adventure/${id}`, data);
+      await axios.delete(`/adventures/${id}`);
+      console.log("Adventure deleted!");
     } catch (err) {
       console.error(err);
     }
@@ -69,6 +67,13 @@ const AdventureCardList: React.FC<AdventureProps> = ({
               }}
               className='adventure__edit'
             />
+            <FontAwesomeIcon
+              icon={faTrashAlt}
+              onClick={() => {
+                deleteAdventure(adventure.id);
+              }}
+              className='adventure__delete'
+            />
             <div
               className='adventure__card'
               onClick={() => setActiveAdventure(adventure)}
@@ -84,7 +89,7 @@ const AdventureCardList: React.FC<AdventureProps> = ({
           </div>
         ))}
       </div>
-      {edit && <ModalWindow id={id} editAdventure={editAdventure} />}
+      {edit && <EditAdventure edit={edit} setEdit={setEdit} id={id} />}
       <h3 className='adventure__add'>
         Add new adventure
         <FontAwesomeIcon

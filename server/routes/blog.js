@@ -18,6 +18,16 @@ router
       .catch((err) => res.send("Error getting blogs for this location"));
   })
 
+  .get("/active/:id", (req, res) => {
+    console.log(req.params.id);
+    knex("blogs")
+      .where({ id: Number(req.params.id) })
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => res.send("Error getting blog post"));
+  })
+
   .get("/", (req, res) => {
     knex
       .select("*")
@@ -52,7 +62,9 @@ router
             res.status(201).json(newPost);
           });
       })
-      .catch(() => res.status(404).json({ message: "Error creating post" }));
+      .catch(() =>
+        res.status(404).json({ message: "Error creating blog post" })
+      );
   })
 
   // Update post
@@ -71,7 +83,7 @@ router
           });
       })
       .catch(() => {
-        res.status(404).json({ message: "Error updating post" });
+        res.status(404).json({ message: "Error updating blog post" });
       });
   })
 
@@ -80,12 +92,14 @@ router
     Blog.where({ id: req.params.id })
       .destroy()
       .then(() => {
-        res.status(200).json({ message: `Post ${req.params.id} deleted` });
+        res
+          .status(200)
+          .json({ message: `Blog post with id: ${req.params.id} deleted` });
       })
       .catch(() =>
-        res
-          .status(400)
-          .json({ message: `Error deleting post ${req.params.id}` })
+        res.status(400).json({
+          message: `Error deleting blog post with id: ${req.params.id}`,
+        })
       );
   });
 
